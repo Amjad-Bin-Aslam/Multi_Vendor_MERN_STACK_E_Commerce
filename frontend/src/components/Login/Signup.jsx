@@ -2,12 +2,24 @@ import React, { useState } from 'react'
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai'
 import styles from '../../styles/styles'
 import { Link } from 'react-router-dom'
+import { RxAvatar } from 'react-icons/rx'
 
 const Signup = () => {
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [name, setName] = useState('')
     const [visible, setVisible] = useState(false)
+    const [avatar, setAvatar] = useState(null)
+
+    const handleSubmit = () => {
+        console.log("fff")
+    }
+
+    const handleFileInputChange = (e) => {
+        const file = e.target.files[0];
+        setAvatar(file)
+    }
 
     return (
         <div className='min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8'>
@@ -23,7 +35,21 @@ const Signup = () => {
                     <form className='space-y-6'>
 
                         <div>
-                            <label className='block text-sm font-medium text-gray-700' htmlFor="email">Email Address</label> 
+                            <label className='block text-sm font-medium text-gray-700' htmlFor="email">Full Name</label> 
+                            <div className='mt-1'>
+                                <input
+                                    className='appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm'
+                                    type="name"
+                                    name='name'
+                                    id='name'
+                                    autoComplete='name'
+                                    required value={name}
+                                    onChange={(e) => setName(e.target.value)} />
+                            </div>
+                        </div>
+
+                        <div>
+                            <label className='block text-sm font-medium text-gray-700' htmlFor="email">Email Address</label>
                             <div className='mt-1'>
                                 <input
                                     className='appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm'
@@ -66,17 +92,27 @@ const Signup = () => {
                             </div>
                         </div>
 
-                        <div className={`${styles.noramlFlex} justify-between`}>
-                            <div className={`${styles.noramlFlex}`}>
-                                <input className='h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded' type="checkbox" name='remember-me' id='remember-me' />
-                                <label className='ml-2 text-sm text-gray-900' htmlFor="remember-me">
-                                    Remember me
+                        <div>
+                            <label className='block text-sm font-medium text-gray-700' htmlFor="avatar">
+                            </label>
+                            <div className='mt-2 flex items-center'>
+                                <span className='inline-block h-8 w-8 rounded-full overflow-hidden'>
+                                    {
+                                        avatar
+                                        ? <imgh className='h-full w-full object-cover rounded-full' src={URL.createObjectURL(avatar)} alt="avatar" />
+                                        : (
+                                            <RxAvatar className="w-8 h-8" />
+                                        )
+                                    }
+                                </span>
+                                <label className="ml-5 flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50" htmlFor="file-input">
+                                    <span>Upload a file</span>
+                                    <input
+                                    className='sr-only'
+                                    type="file" name='avatar' id='file-input' accept='.jpg,.jpeg,.png'
+                                    onChange={handleFileInputChange}
+                                    />
                                 </label>
-                            </div>
-                            <div className='text-sm'>
-                                <a className='font-medium text-blue-500' href=".forgot-password">
-                                    Forgot your password?
-                                </a>
                             </div>
                         </div>
 
@@ -87,8 +123,8 @@ const Signup = () => {
                         </div>
 
                         <div className={`${styles.noramlFlex} w-full`}>
-                            <h4>Not have an account?</h4>
-                            <Link to="/sign-up" className = "text-blue-600 pl-2" >
+                            <h4>Already have an account?</h4>
+                            <Link to="/login" className = "text-blue-600 pl-2" >
                             Sign Up
                             </Link>
                         </div>
