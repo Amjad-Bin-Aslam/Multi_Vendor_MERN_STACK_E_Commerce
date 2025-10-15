@@ -4,6 +4,7 @@ const connectDatabase = require('./db/Database');
 const ErrorHandler = require('./utils/ErrorHandler');
 const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser');
+const userRouter = require('./Routes/userRoutes');
 
 
 const app = express()
@@ -19,9 +20,9 @@ app.use(cookieParser())
 app.use(bodyParser.urlencoded({extended: true}))
 
 
-// routes
-const user = require('./controllers/user')
-app.use("/api/v2", user)
+// API end points
+app.use('/api/user', userRouter)
+
 
 app.get('/', (req,res) => {
     res.send("API is woriking fine.")
@@ -31,7 +32,8 @@ app.get('/', (req,res) => {
 // Error handling utils
 app.use(ErrorHandler)
 
-app.listen(port , () => {
+
+app.listen(port , () => { 
     console.log("Server started at PORT:",port)
 })
 

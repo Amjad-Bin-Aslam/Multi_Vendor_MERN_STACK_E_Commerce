@@ -1,11 +1,9 @@
 const express = require('express')
 const path = require('path')
-const router = express.Router()
-const {upload} = require('../middlewares/multer')
 const User = require('../models/user')
 const ErrorHandler = require('../utils/ErrorHandler')
 
-router.post('/create-user', upload.single('file'), async (req, res, next) => {
+const createUser = async (req, res, next) => {
 
     try {
         
@@ -26,10 +24,18 @@ router.post('/create-user', upload.single('file'), async (req, res, next) => {
             avatar: fileUrl
         };
 
+        res.json({ success: true, user })
         console.log(user)
 
     } catch (err) {
+        res.json({ success: false, message: err.message })
         console.log(err)
     }
 
-})
+}
+
+
+
+module.exports = {
+    createUser,
+}
