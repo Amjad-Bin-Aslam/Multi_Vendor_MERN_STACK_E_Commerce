@@ -10,6 +10,7 @@ const userSchema = new mongoose.Schema({
   email:{
     type: String,
     required: [true, "Please enter your email!"],
+    unique: true
   },
   password:{
     type: String,
@@ -29,7 +30,7 @@ const userSchema = new mongoose.Schema({
         type: String,
       },
       address1:{
-        type: String,
+        type: String, 
       },
       address2:{
         type: String,
@@ -49,7 +50,7 @@ const userSchema = new mongoose.Schema({
   avatar:{
     public_id: {
       type: String,
-      required: true,
+      required: true, 
     },
     url: {
       type: String,
@@ -86,4 +87,7 @@ userSchema.methods.comparePassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
 };
 
-module.exports = mongoose.model("User", userSchema);
+ 
+
+const userModel = mongoose.model("user", userSchema);
+module.exports = userModel

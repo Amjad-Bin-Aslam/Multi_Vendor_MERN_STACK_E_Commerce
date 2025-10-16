@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai'
 import styles from '../../styles/styles'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { RxAvatar } from 'react-icons/rx'
 import axios from 'axios'
 import { server } from '../../../server'
 
 const Signup = () => {
+
+    const navigate = useNavigate()
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -31,7 +33,9 @@ const Signup = () => {
         newForm.append("password", password)
 
         axios.post(`${server}/api/user/create-user`, newForm, config).then((res)=>{
-            console.log(res)
+            if(res.data.success === true){
+                console.log(res)
+            }
         }).catch((err)=>{
             console.log(err.message) 
         })
@@ -115,7 +119,7 @@ const Signup = () => {
                                 <span className='inline-block h-8 w-8 rounded-full overflow-hidden'>
                                     {
                                         avatar
-                                        ? <imgh className='h-full w-full object-cover rounded-full' src={URL.createObjectURL(avatar)} alt="avatar" />
+                                        ? <img className='h-full w-full object-cover rounded-full' src={URL.createObjectURL(avatar)} alt="avatar" />
                                         : (
                                             <RxAvatar className="w-8 h-8" />
                                         )
