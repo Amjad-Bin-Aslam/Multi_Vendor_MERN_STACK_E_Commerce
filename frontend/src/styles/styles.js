@@ -14,6 +14,6 @@ const styles = {
     activeStatus:"w-[10px] h-[10px] rounded-full absolute top-0 right-1 bg-[#40d132]",
     noramlFlex:"flex items-center"
   };
-  
+   
   export default styles;
   

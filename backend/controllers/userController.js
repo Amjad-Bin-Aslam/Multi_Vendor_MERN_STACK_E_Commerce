@@ -17,12 +17,12 @@ const createUser = async (req, res) => {
 
         if (!name || !email || !password) {
             return res.json({ success: false, message: "Missing details." })
-        }
+        } 
 
         if (!validator.isEmail(email)) {
             return res.json({ success: false, message: "Enter the valid email." })
         }
-
+  
         if (password.length < 8) {
             return res.json({ success: false, message: "Enter the strong password." })
         }
@@ -38,7 +38,8 @@ const createUser = async (req, res) => {
                     return res.json({ success: false, message: "Error deleting the file." })
                 }
             })
-        }
+            return res.json({ success: false, message: "User already exist!" })
+        } 
 
         const filename = req.file.filename
         const fileUrl = path.join("uploads", filename)
@@ -124,11 +125,66 @@ const activateUser = async (req, res) => {
 
 
 
+// login user
+const loginUser = async (req , res) => {
+
+    try {
+        
+        const { email, password } = req.body;
+
+        if(!email || !password){
+            return res.json({ success: false, message: "Mssing details." })
+        }
+
+        const user = await userModel.findOne({ email }).select("+password")
+        if(!user){
+            return res.json({ success: false, message: "User doesn't exist!" })
+        }
+
+        const isPasswordValid = await user.comparePassword(password)
+        if(!isPasswordValid){
+            return res.json({ success: false, message: "Please provide correct informaton." })
+        }
+
+        sendToken( user, res )
+
+    } catch (error) {
+        console.log(error)
+        return res.json({ sucess: false, message: error.message })
+    }
+
+}
+
+
+
+// load user 
+const loadUser = async (req,res) => {
+ 
+    try {
+         
+        const user = await userModel.findById(req.user.id)
+
+        if(!user){
+            return res.json({ success: false, message: "User doesn't exist!" })
+        }
+  
+        res.status(200).json({  
+            success: true, 
+            user 
+         });  
+  
+    } catch (error) { 
+        console.log(error)
+        return res.json({ success: false, message: error.message })
+    }
+ 
+}  
+
 
 // creating the token
 const createActivationToken = (user) => {
     return jwt.sign(user, process.env.ACTIVATION_SECRET, {
-        expiresIn: "10m"
+        expiresIn: "7d"
     })
 }
 
@@ -137,4 +193,6 @@ const createActivationToken = (user) => {
 module.exports = {
     createUser,
     activateUser,
+    loginUser,
+    loadUser,
 }
