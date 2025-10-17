@@ -40,8 +40,8 @@ const Signup = () => {
             setPassword("");
             setAvatar();
         }).catch((err)=>{
+            console.log(err) 
             toast.error(err.message)
-            console.log(err.message) 
         })
     }
 
