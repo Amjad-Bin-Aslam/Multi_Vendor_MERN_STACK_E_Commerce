@@ -30,15 +30,14 @@ const createUser = async (req, res) => {
         // Check if user exists
         const existingUser = await userModel.findOne({ email });
         if (existingUser) {
-            // delete uploaded file if exists
-            if (req.file) {
-                const filename = req.file.filename;
-                const filePath = `uploads/${filename}`;
-                fs.unlink(filePath, (err) => {
-                    if (err) console.log("Error deleting file:", err);
-                });
-            }
-            return res.json({ success: false, message: "User already exists." });
+            const filename = req.file.filename;
+            const filePath = `uploads/${filename}`;
+            fs.unlink(filePath, (err) => {
+                if(err){
+                    console.log(err)
+                    return res.json({ success: false, message: "Error deleting the file." })
+                }
+            })
         }
 
         const filename = req.file.filename
@@ -86,7 +85,7 @@ const createUser = async (req, res) => {
         res.json({ success: false, message: err.message })
     }
 
-}
+} 
 
 
 
@@ -103,23 +102,23 @@ const activateUser = async (req, res) => {
 
         const { name, email, password, avatar} = newUser
 
-        const existingUser = await userModel.findOne({email})
-        if(existingUser){
+        let user = await userModel.findOne({email})
+        if(user){
             return res.json({ success: false, message: "User already exist." })
-        }
+        } 
 
-        const user = await userModel.create({
+        user = await userModel.create({
             name,
-            email,
+            email, 
             password,
-            avatar
+            avatar 
         })
-
-        sendToken(user, res);
-
+    
+        sendToken(user, res); 
+  
     } catch (error) {
         console.log(error)
-        res.json({ success: false, message: error.message })
+        return res.json({ success: false, message: error.message })
     }
 }
 
@@ -129,7 +128,7 @@ const activateUser = async (req, res) => {
 // creating the token
 const createActivationToken = (user) => {
     return jwt.sign(user, process.env.ACTIVATION_SECRET, {
-        expiresIn: "5m"
+        expiresIn: "10m"
     })
 }
 
