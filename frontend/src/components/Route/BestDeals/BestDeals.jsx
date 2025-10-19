@@ -18,11 +18,11 @@ const BestDeals = () => {
     <div>
       
       <div className={`${styles.section}`} >
-        <div className={`${styles.section}`}>
-            <h1> Best Deals </h1>
+        <div className={`${styles.section} ml-0`}>
+            <h1 className='font-bold text-4xl mb-10'> Best Deals </h1>
         </div>
 
-        <div className="grid grid-cols-1 gap-[5px] md:grid-cols-2 md:gap-[10px] lg:grid-cols-4 lg:gap-[20px] xl:grid-cols-5 xl:gap-[30px]">
+        <div className="grid grid-cols-1 gap-[20px] md:grid-cols-2 md:gap-[25px] lg:grid-cols-4 lg:gap-[25px] xl:grid-cols-5 xl:gap-[30px] mb-12 border-0">
             {
                 data && data.map((item,index)=>(
                     <ProductCard data={item} key = {index} />
