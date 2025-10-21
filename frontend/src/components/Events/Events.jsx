@@ -8,7 +8,7 @@ const Events = () => {
       <div>
             <div className={`${styles.section}`}>
                 <div className={`${styles.heading}`}>
-                    <h1 className='font-bold'> 
+                    <h1 className='font-bold mb-5'> 
                         Popular Events 
                     </h1>
                 </div>

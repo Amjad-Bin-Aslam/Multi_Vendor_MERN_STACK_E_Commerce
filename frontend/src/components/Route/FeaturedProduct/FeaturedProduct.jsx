@@ -5,7 +5,7 @@ import ProductCard from '../ProductCard/ProductCard'
 
 const FeaturedProduct = () => {
     return (
-        <div>
+        <div className='mt-10'>
             <div className={`${styles.section}`}>
                 <div className={`${styles.heading}`}>
                     <h1 className='font-bold'> Featured Product </h1>
