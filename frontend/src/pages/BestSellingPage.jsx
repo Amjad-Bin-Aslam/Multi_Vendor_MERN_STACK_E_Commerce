@@ -14,7 +14,7 @@ const BestSellingPage = () => {
         setData(d)
 
     },[])
-
+ 
   return (
     <div>
             <Header activeHeading={2} />
@@ -29,7 +29,7 @@ const BestSellingPage = () => {
                 </div>
             </div>
 
-        </div>
+        </div> 
   )
 }
 
