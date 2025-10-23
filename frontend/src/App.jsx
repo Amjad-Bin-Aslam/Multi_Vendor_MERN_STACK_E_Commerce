@@ -5,8 +5,13 @@ import { ToastContainer } from 'react-toastify';
 import { useEffect } from 'react';
 import store from './redux/store';
 import { loadUser } from './redux/actions/user';
+import { useSelector } from 'react-redux';
+
+
 
 function App() {
+
+  const { loading } = useSelector((state) => state.user)
 
   useEffect(() => {
     store.dispatch(loadUser()); 
@@ -14,7 +19,12 @@ function App() {
 
   return ( 
     
-    <div>
+    <>
+    {
+      loading ? (
+        null
+      ) : (
+        <div>
 
     <ToastContainer />
 
@@ -30,6 +40,9 @@ function App() {
     </Routes>
 
     </div>
+      )
+    }
+    </>
     
   )
 }
