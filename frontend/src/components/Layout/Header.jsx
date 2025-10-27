@@ -24,7 +24,7 @@ const Header = ({ activeHeading }) => {
   const handleSearchChange = (e) => {
     const term = e.target.value
     setSearchTerm(term)
- 
+  
     const filteredProducts = productData && productData.filter((product) => {
       return product.name.toLowerCase().includes(term.toLowerCase());
     })
