@@ -40,7 +40,7 @@ const Header = ({ activeHeading }) => {
   })
 
   return (
-    <>
+    <> 
       <div className={`${styles.section}`}>
 
         {/* Header container */}
