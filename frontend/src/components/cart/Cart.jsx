@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { RxCross1 } from 'react-icons/rx'
 import { IoBagHandleOutline } from 'react-icons/io5'
-import {HiPlus} from 'react-icons/hi'
+import {HiOutlineMinus, HiPlus} from 'react-icons/hi'
 import styles from '../../styles/styles'
 
 const Cart = ({ setOpenCart }) => {
@@ -76,6 +76,11 @@ const CartSingle = ({data}) => {
                     <span className='pl-[10px]'>
                         {value}
                     </span>
+                    <div className='bg-[#a7abb14f] rounded-full w-[25px] h-[25px] flex items-center justify-center cursor-pointer'
+                    onClick={() => setValue(value === 1 ? 1 : value -1)}
+                    >
+                      <HiOutlineMinus size={16} color='#7d879c' />
+                    </div>
                 </div>
             </div>
         </div>
