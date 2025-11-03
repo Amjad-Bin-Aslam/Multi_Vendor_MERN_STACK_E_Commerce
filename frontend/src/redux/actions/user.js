@@ -23,5 +23,4 @@ export const loadUser =  () => async (dispatch) => {
             payload: error.response?.data?.message || error.message
         });
     }
-
 }

@@ -49,7 +49,7 @@ const Header = ({ activeHeading }) => {
           <div>
             <Link to={'/'}>
               <img src="https://shopo.quomodothemes.website/assets/images/logo.svg" alt="" />
-            </Link>
+            </Link> 
           </div>
           {/* ===== search box ==== */}
           <div className='w-[50%] relative'>
