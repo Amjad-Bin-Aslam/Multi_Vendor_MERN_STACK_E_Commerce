@@ -24,7 +24,7 @@ function App() {
       loading ? (
         null
       ) : (
-        <div>
+    <div>
 
     <ToastContainer />
 
@@ -34,10 +34,11 @@ function App() {
       <Route path='/sign-up' element = {<SignupPage/>} />
       <Route path='/activation/:activation_token' element = {<ActivationPage/>} />
       <Route path='/products' element ={ <ProductPage /> } />
+      <Route path='/product:/id' element ={ <ProductPage /> } />
       <Route path='/best-selling' element ={ <BestSellingPage /> } />
       <Route path='/events' element = {<EventsPage />} />
       <Route path='/faq' element = {<FAQPage />} />
-    </Routes>
+    </Routes> 
 
     </div>
       )
