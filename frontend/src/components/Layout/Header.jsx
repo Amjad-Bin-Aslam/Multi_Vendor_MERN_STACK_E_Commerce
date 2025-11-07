@@ -141,7 +141,7 @@ const Header = ({ activeHeading }) => {
             <div className={`${styles.noramlFlex}`}>
               <div className='relative cursor-pointer mr-[15px]'
               onClick={()=>setOpenWishList(true)}
-              >
+              > 
                 <AiOutlineHeart
                   size={30}
                   color='rgb(255 255 253 / 83%)'
@@ -206,6 +206,8 @@ const Header = ({ activeHeading }) => {
 
         </div>
       </div>
+
+      
 
     </>
   )
