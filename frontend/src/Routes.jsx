@@ -9,11 +9,11 @@ import FAQPage from './pages/FAQPage'
 
 export {
     LoginPage,
-    SignupPage,
+    SignupPage, 
     ActivationPage,
     HomePage,
     ProductPage,
-    BestSellingPage,
+    BestSellingPage,  
     EventsPage,
     FAQPage
 } 

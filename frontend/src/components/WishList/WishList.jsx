@@ -6,7 +6,7 @@ import styles from '../../styles/styles'
 import { AiOutlineHeart } from 'react-icons/ai'
 
 const WishList = ({ setOpenWishList }) => {
-
+ 
     const CartData = [
         {
             name: "Iphone 14 pro max 256 gb ssd and 8gb ram silver color",
@@ -23,7 +23,7 @@ const WishList = ({ setOpenWishList }) => {
             description: "it is latest model",
             price: 445
         },
-    ]
+    ]   
 
     return (
         <div className='fixed top-0 left-0 w-full bg-[#0000004b] h-screen z-10'>
