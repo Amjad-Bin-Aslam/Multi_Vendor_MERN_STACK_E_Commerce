@@ -188,7 +188,7 @@ const Header = ({ activeHeading }) => {
 
             {/* Cart poprup */}
 
-            {
+            { 
               openCart ? (
                 <Cart setOpenCart = {setOpenCart} />
               ) : null

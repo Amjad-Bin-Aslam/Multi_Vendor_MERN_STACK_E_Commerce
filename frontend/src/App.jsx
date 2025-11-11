@@ -1,6 +1,6 @@
 import './index.css'
 import { BrowserRouter,Routes,Route } from 'react-router-dom'
-import { LoginPage, SignupPage, ActivationPage, HomePage, ProductPage, BestSellingPage, EventsPage, FAQPage } from "./Routes"
+import { LoginPage, SignupPage, ActivationPage, HomePage, ProductPage, BestSellingPage, EventsPage, FAQPage, ProductDetailsPage } from "./Routes"
 import { ToastContainer } from 'react-toastify';
 import { useEffect } from 'react';
 import store from './redux/store';
@@ -34,10 +34,10 @@ function App() {
       <Route path='/sign-up' element = {<SignupPage/>} />
       <Route path='/activation/:activation_token' element = {<ActivationPage/>} />
       <Route path='/products' element ={ <ProductPage /> } />
-      <Route path='/product:/id' element ={ <ProductPage /> } />
+      <Route path='/product/:name' element ={ <ProductDetailsPage /> } />
       <Route path='/best-selling' element ={ <BestSellingPage /> } />
       <Route path='/events' element = {<EventsPage />} />
-      <Route path='/faq' element = {<FAQPage />} />
+      <Route path='/faq' element = {<FAQPage />} /> 
     </Routes> 
 
     </div>
