@@ -23,7 +23,7 @@ const Header = ({ activeHeading }) => {
   const [openCart , setOpenCart] = useState(false)
   const [openWishList , setOpenWishList] = useState(false)
 
-  console.log(user)
+  // console.log(user)
 
   const handleSearchChange = (e) => {
     const term = e.target.value
@@ -170,8 +170,8 @@ const Header = ({ activeHeading }) => {
                   <Link to="/profile">
                     <img
                       className='w-[35px] h-[35px] object-cover rounded-full'
-                      src={`${backend}/${user.avatar}`}
-                      alt="user"
+                      src={`${backend}${user.avatar}`}
+                      alt=""
                     /> 
 
                   </Link>

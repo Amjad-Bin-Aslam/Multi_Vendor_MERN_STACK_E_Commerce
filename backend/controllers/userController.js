@@ -181,6 +181,26 @@ const loadUser = async (req,res) => {
 }  
 
 
+// Logout user
+const logoutUser = async (req , res) => {
+
+    try {
+
+       res.cookie("token", null , {
+        expires: new Date(Date.now()),
+        httpOnly: true,
+       }) 
+
+       return res.status(201).json({ success: true , message: "Logged out successfully." })
+        
+    } catch (error) {
+       console.log(error) 
+       return res.json({ success: false, message: error.message })
+    }
+}
+
+
+
 // creating the token
 const createActivationToken = (user) => {
     return jwt.sign(user, process.env.ACTIVATION_SECRET, {
@@ -195,4 +215,5 @@ module.exports = {
     activateUser,
     loginUser,
     loadUser,
+    logoutUser,
 }

@@ -4,6 +4,7 @@ import Header from '../components/Layout/Header'
 import Footer from '../components/Layout/Footer'
 import ProductDetails from "../components/Products/ProductDetails"
 import { productData } from '../static/data'
+import SuggestedProduct from '../components/Products/SuggestedProduct'
 
 const ProductDetailsPage = () => {
 
@@ -16,12 +17,15 @@ const ProductDetailsPage = () => {
     setData(data)
   },[])
 
-  console.log(name)
+  // console.log(name)
 
   return (
     <div>
       <Header />
       <ProductDetails data = {data} />
+      {
+        data && <SuggestedProduct data = {data} />
+      }
       <Footer />
     </div>
   )

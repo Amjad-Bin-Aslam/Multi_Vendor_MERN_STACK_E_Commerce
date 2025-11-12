@@ -35,8 +35,8 @@ const ProductDetails = ({ data }) => {
                         <div className="w-full py-5">
                             <div className='block w-full 800px:flex'>
                                 {/* Left side */}
-                                <div className='w-full 800px:w-[50%]'>
-                                    <img src={data.image_Url[select].url} alt="" className='w-[30%]' />
+                                <div className='w-full 800px:w-[90%]'>
+                                    <img src={data.image_Url[select].url} alt="" className='w-[40%]' />
                                     <div className='w-full flex'>
                                         <div className={`${select === 0 ? 'border' : 'null'} cursor-pointer`}>
                                             <img src={data?.image_Url[0].url} alt=""

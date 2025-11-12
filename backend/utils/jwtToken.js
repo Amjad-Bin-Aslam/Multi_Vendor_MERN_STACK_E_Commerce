@@ -12,7 +12,7 @@ const sendToken = (user,res) => {
     res.cookie("token", token, options).json({
         success: true,
         user,
-        token
+        token 
     })
 }
 
