@@ -26,7 +26,7 @@ const ProfileContent = ({active}) => {
     }
  
   return (
-    <div className='w-full'>
+    <div className='w-full px-4 md:px-0'>
 
         {/* Profile */}
       {
@@ -35,7 +35,7 @@ const ProfileContent = ({active}) => {
             <div className='flex justify-center w-full'>
                 <div className="relative">
                    <img
-                    className='w-[150px] h-[150px] object-cover rounded-full border-[3px] border-[#3ad123]'
+                    className='w-[120px] h-[120px] md:w-[150px] md:h-[150px] object-cover rounded-full border-[3px] border-[#3ad123]'
                     src={`${backend}${user?.avatar}`}
                     alt="user"
                     />   
@@ -46,26 +46,26 @@ const ProfileContent = ({active}) => {
             </div>
             <br />
             <br /> 
-            <div className='w-full px-5'>
+            <div className='w-full px-4 md:px-5'>
                     <form onSubmit={handleSubmit} aria-required={true}>
 
                         {/* Name and Email */}
-                       <div className='w-full flex pb-3'>
-                         <div className='w-[50%]'>
-                            <label className='block pb-2'>
+                       <div className='w-full flex flex-col sm:flex-row gap-4 pb-3'>
+                         <div className='w-full sm:w-[50%]'>
+                            <label className='block pb-2 text-sm md:text-base'>
                                 Full Name
                             </label>
-                            <input type="text" className={`${styles.input} bg-white !w-[95%]`} 
+                            <input type="text" className={`${styles.input} bg-white !w-full`} 
                             required
                             value={name}
                             onChange={(e)=>setName(e.target.value)}
                             />
                          </div>
-                         <div className='w-[50%]'>
-                            <label className='block pb-2'>
+                         <div className='w-full sm:w-[50%]'>
+                            <label className='block pb-2 text-sm md:text-base'>
                                 Email
                             </label>
-                            <input type="email" className={`${styles.input} bg-white !w-[95%]`} 
+                            <input type="email" className={`${styles.input} bg-white !w-full`} 
                             required
                             value={email}
                             onChange={(e)=>setEmail(e.target.value)}
@@ -74,22 +74,22 @@ const ProfileContent = ({active}) => {
                        </div> 
 
                         {/* Number and ZipCode */}
-                        <div className='w-full flex pb-3'>
-                         <div className='w-[50%]'>
-                            <label className='block pb-2'>
+                        <div className='w-full flex flex-col sm:flex-row gap-4 pb-3'>
+                         <div className='w-full sm:w-[50%]'>
+                            <label className='block pb-2 text-sm md:text-base'>
                                 Phone Number
                             </label>
-                            <input type="number" className={`${styles.input} bg-white !w-[95%]`} 
+                            <input type="number" className={`${styles.input} bg-white !w-full`} 
                             required
                             value={phoneNumber}
                             onChange={(e)=>setPhoneNumber(e.target.value)}
                             />
                          </div>
-                         <div className='w-[50%]'>
-                            <label className='block pb-2'>
+                         <div className='w-full sm:w-[50%]'>
+                            <label className='block pb-2 text-sm md:text-base'>
                                 Zip Code
                             </label>
-                            <input type="number" className={`${styles.input} bg-white !w-[95%]`} 
+                            <input type="number" className={`${styles.input} bg-white !w-full`} 
                             required
                             value={zipCode}
                             onChange={(e)=>setZipCode(e.target.value)}
@@ -98,22 +98,22 @@ const ProfileContent = ({active}) => {
                        </div>
 
                        {/* Address */}
-                       <div className='w-full flex pb-3'>
-                         <div className='w-[50%]'>
-                            <label className='block pb-2'>
+                       <div className='w-full flex flex-col sm:flex-row gap-4 pb-3'>
+                         <div className='w-full sm:w-[50%]'>
+                            <label className='block pb-2 text-sm md:text-base'>
                                 Address 1
                             </label>
-                            <input type="address" className={`${styles.input} bg-white !w-[95%]`} 
+                            <input type="address" className={`${styles.input} bg-white !w-full`} 
                             required
                             value={address1}
                             onChange={(e)=>setAddress1(e.target.value)}
                             />
                          </div>
-                         <div className='w-[50%]'>
-                            <label className='block pb-2'>
+                         <div className='w-full sm:w-[50%]'>
+                            <label className='block pb-2 text-sm md:text-base'>
                                 Address 2
                             </label>
-                            <input type="address" className={`${styles.input} bg-white !w-[95%]`} 
+                            <input type="address" className={`${styles.input} bg-white !w-full`} 
                             required
                             value={address2}
                             onChange={(e)=>setAddress2(e.target.value)}
@@ -124,7 +124,7 @@ const ProfileContent = ({active}) => {
                        <input 
                        type="submit" 
                        value="Update"
-                       className={`w-[250px] h-[40px] border border-[#3a24db] text-center text-[#3a24db] rounded-[3px] mt-8 cursor-pointer`}
+                       className={`w-full sm:w-[250px] h-[40px] border border-[#3a24db] text-center text-[#3a24db] rounded-[3px] mt-8 cursor-pointer`}
                        />
 
                     </form>
@@ -260,7 +260,7 @@ const AllOrders = () => {
     });
 
   return (
-    <div className="pl-8 pt-1">
+    <div className="pl-0 md:pl-8 pt-1 overflow-x-auto">
       <DataGrid
         rows={rows}
         columns={columns}
@@ -349,7 +349,7 @@ const AllRefundOrders = () => {
   } )
 
     return(
-        <div className='pl-8 pt-1'>
+        <div className='pl-0 md:pl-8 pt-1 overflow-x-auto'>
             <DataGrid 
             rows={row}
             columns={columns}
@@ -440,7 +440,7 @@ const TrackOrder = () => {
   console.log(orders)
 
     return (
-        <div className='pl-8 pt-1'>
+        <div className='pl-0 md:pl-8 pt-1 overflow-x-auto'>
             <DataGrid 
             rows={row}
             columns={columns}
@@ -455,9 +455,9 @@ const TrackOrder = () => {
 
 const PaymentMethod = () => {
     return (
-        <div className='w-full px-5'>
-            <div className='w-full flex justify-between items-center'>
-                <h1 className='text-[25px] font-[600] text-[#000000ba] pb-2'>
+        <div className='w-full px-4 md:px-5'>
+            <div className='w-full flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4'>
+                <h1 className='text-[20px] md:text-[25px] font-[600] text-[#000000ba] pb-2'>
                     Payment Methods
                 </h1>
                 <div className={`${styles.button} rounded-md`}>
@@ -465,21 +465,21 @@ const PaymentMethod = () => {
                 </div>
             </div>
             <br />
-            <div className='w-full bg-white h-[70px] rounded-[4px] flex items-center px-3 shadow justify-between pr-10'>
-                <div className="flex item-center">
+            <div className='w-full bg-white h-auto md:h-[70px] rounded-[4px] flex flex-col sm:flex-row items-start sm:items-center px-3 shadow justify-between pr-4 md:pr-10 gap-4 py-3 md:py-0'>
+                <div className="flex items-center gap-2">
                     <img 
                     src="https://bonik-react.vercel.app/assets/images/payment-methods/Visa.svg" 
                     alt="" 
                     />
-                    <h5 className='pl-5 font-[600]'>Amjad Aslam</h5>
+                    <h5 className='font-[600] text-sm md:text-base'>Amjad Aslam</h5>
                 </div>
-                <div className='pl-8 flex items-center'>
-                    <h6> 123456**** </h6>
-                    <h5 className='pl-6'> 08/08/2028 </h5>
+                <div className='pl-0 md:pl-8 flex flex-col sm:flex-row items-start sm:items-center gap-2 md:gap-0'>
+                    <h6 className='text-sm md:text-base'> 123456**** </h6>
+                    <h5 className='pl-0 md:pl-6 text-sm md:text-base'> 08/08/2028 </h5>
                 </div>
                 <div>
-                    <div className="min-w-[10%] flex items-center justify-between pl-8">
-                        <AiOutlineDelete size={25} className='cursor-pointer' />
+                    <div className="flex items-center justify-between pl-0 md:pl-8">
+                        <AiOutlineDelete size={20} className='cursor-pointer' />
                     </div>
                 </div>
             </div>
@@ -490,9 +490,9 @@ const PaymentMethod = () => {
 
 const Address = () => {
     return (
-        <div className='w-full px-5'>
-            <div className='w-full flex justify-between items-center'>
-                <h1 className='text-[25px] font-[600] text-[#000000ba] pb-2'>
+        <div className='w-full px-4 md:px-5'>
+            <div className='w-full flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4'>
+                <h1 className='text-[20px] md:text-[25px] font-[600] text-[#000000ba] pb-2'>
                     My Addresses
                 </h1>
                 <div className={`${styles.button} rounded-md`}>
@@ -500,19 +500,19 @@ const Address = () => {
                 </div>
             </div>
             <br />
-            <div className='w-full bg-white h-[70px] rounded-[4px] flex items-center px-3 shadow justify-between pr-10'>
-                <div className="flex item-center">
-                    <h5 className='pl-5 font-[600]'>Default Address</h5>
+            <div className='w-full bg-white h-auto md:h-[70px] rounded-[4px] flex flex-col sm:flex-row items-start sm:items-center px-3 shadow justify-between pr-4 md:pr-10 gap-4 py-3 md:py-0'>
+                <div className="flex items-center gap-2">
+                    <h5 className='font-[600] text-sm md:text-base'>Default Address</h5>
                 </div>
-                <div className='pl-8 flex items-center'>
-                    <h6> 494 Eden Garden, Joyland, UK </h6>
+                <div className='pl-0 md:pl-8 flex flex-col sm:flex-row items-start sm:items-center gap-2 md:gap-0'>
+                    <h6 className='text-sm md:text-base'> 494 Eden Garden, Joyland, UK </h6>
                 </div>
-                <div className='pl-8 flex items-center'>
-                    <h6> Ph: +923154854986 </h6>
+                <div className='pl-0 md:pl-8 flex items-center'>
+                    <h6 className='text-sm md:text-base'> Ph: +923154854986 </h6>
                 </div>
                 <div>
-                    <div className="min-w-[10%] flex items-center justify-between pl-8">
-                        <AiOutlineDelete size={25} className='cursor-pointer' />
+                    <div className="flex items-center justify-between pl-0 md:pl-8">
+                        <AiOutlineDelete size={20} className='cursor-pointer' />
                     </div>
                 </div>
             </div>

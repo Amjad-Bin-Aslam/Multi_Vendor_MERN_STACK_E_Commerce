@@ -12,11 +12,13 @@ const ProfilePage = () => {
   return (
     <div>
       <Header />
-      <div className={`${styles.section} flex bg-[#f5f5f5] py-10`}>
-        <div className='w-[335px]'>
+      <div className={`${styles.section} flex flex-col md:flex-row gap-4 md:gap-6 bg-[#f5f5f5] py-8 md:py-10 px-4 md:px-0`}>
+        <div className='w-full md:w-[335px]'>
             <ProfileSideBar active={active} setActive={setActive}  />
+        </div> 
+        <div className='w-full md:flex-1'>
+          <ProfileContent active ={active} />
         </div>
-        <ProfileContent active ={active} />
       </div>
     </div>
   )

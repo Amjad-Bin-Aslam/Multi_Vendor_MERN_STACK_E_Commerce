@@ -17,17 +17,17 @@ import { useEffect } from 'react';
 import store from './redux/store';
 import { loadUser } from './redux/actions/user';
 import { useSelector } from 'react-redux';
-
+import ProtectedRoute from './ProtectedRoute';
 
 
 function App() {
 
-  const { loading } = useSelector((state) => state.user)
+  const { loading, isAuthenticated } = useSelector((state) => state.user)
 
   useEffect(() => {
     store.dispatch(loadUser()); 
   },[]) 
-
+ 
   return ( 
     
     <>
@@ -49,7 +49,11 @@ function App() {
       <Route path='/best-selling' element ={ <BestSellingPage /> } />
       <Route path='/events' element = {<EventsPage />} />
       <Route path='/faq' element = {<FAQPage />} /> 
-      <Route path='/profile' element = { <ProfilePage /> } />
+      <Route path='/profile' element = { 
+        <ProtectedRoute isAuthenticated={isAuthenticated}>
+          <ProfilePage />
+        </ProtectedRoute>
+       } />
     </Routes> 
 
     </div>
