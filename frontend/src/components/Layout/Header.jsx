@@ -16,7 +16,7 @@ import { RxCross1 } from 'react-icons/rx'
 
 const Header = ({ activeHeading }) => {
 
-  const { isAuthenticated, user } = useSelector((state) => state.user)
+  const { isAuthenticated, user, role } = useSelector((state) => state.user)
   const [searchTerm, setSearchTerm] = useState("")
   const [searchData, setSearchData] = useState(null)
   const [active, setActive] = useState(false)
@@ -95,7 +95,7 @@ const Header = ({ activeHeading }) => {
 
           {/* Seller icon */}
           <div className={`${styles.button}`}>
-            <Link to="/seller">
+            <Link to="/shop-create">
               <h1 className='text-[#fff] flex items-center'>
                 Become Seller
                 <IoIosArrowForward />
@@ -170,10 +170,10 @@ const Header = ({ activeHeading }) => {
             <div className={`${styles.noramlFlex}`}>
               <div className='relative cursor-pointer mr-[15px]'>
                 {isAuthenticated ? (
-                  <Link to="/profile">
+                  <Link to={"/profile"}>
                     <img
                       className='w-[35px] h-[35px] object-cover rounded-full'
-                      src={`${backend}${user.avatar}`}
+                      src={user && user.avatar ? `${backend}${user.avatar}` : 'https://via.placeholder.com/35'}
                       alt=""
                     />
 
@@ -303,7 +303,7 @@ const Header = ({ activeHeading }) => {
 
                 {/* Seller Button */}
                 <div className={`${styles.button} ml-5 mt-8`}>
-                  <Link to="/seller">
+                  <Link to="/shop-create"> 
                     <h1 className='text-[#fff] flex items-center'>
                       Become Seller
                       <IoIosArrowForward />
@@ -320,10 +320,10 @@ const Header = ({ activeHeading }) => {
                   {
                     isAuthenticated ? (
                       <div>
-                        <Link to="/profile">
+                        <Link to={"/profile"}>
                           <img
                             className='w-[45px] h-[45px] object-cover rounded-full border-[3px] border-[#44db39]'
-                            src={`${backend}${user.avatar}`}
+                            src={user && user.avatar ? `${backend}${user.avatar}` : 'https://via.placeholder.com/45'}
                             alt=""
                           />
                         </Link>

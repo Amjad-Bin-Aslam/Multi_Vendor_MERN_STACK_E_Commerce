@@ -24,3 +24,28 @@ export const loadUser =  () => async (dispatch) => {
         });
     }
 } 
+
+
+// Load shop
+export const loadShop =  () => async (dispatch) => {
+
+    try {
+        
+        dispatch({
+            type: "LoadSellerRequest"
+        })
+
+        const { data } = await axios.get(`${server}/api/seller/get-shop`, {withCredentials: true})
+
+        dispatch({
+            type: "LoadingSellerSuccess",
+            payload: data.shop
+        })
+
+    } catch (error) {
+        dispatch({
+            type: "LoadSellerFail",
+            payload: error.response?.data?.message || error.message
+        });
+    }
+} 

@@ -1,7 +1,7 @@
 const express = require('express')
 const { upload } = require('../middlewares/multer');
 const { createUser, activateUser, loginUser, loadUser, logoutUser } = require('../controllers/userController');
-const isAuthenticated = require('../middlewares/authUser');
+const {isAuthenticated} = require('../middlewares/auth');
 
 
 const userRouter = express.Router()
@@ -17,4 +17,4 @@ userRouter.post('/logout-user', isAuthenticated, logoutUser)
 userRouter.get('/load-user', isAuthenticated, loadUser)
 
 
-module.exports = userRouter;
+module.exports = userRouter; 
