@@ -10,10 +10,10 @@ const ShopCreatePage = () => {
   const { isSeller , shop } = useSelector((state) => state.seller)
 
   useEffect(() => {
-    if(isSeller === true && shop && shop._id){
+    if(isSeller === true){
       navigate(`/shop/${shop._id}`)
     }
-  } ,[])
+  }, [isSeller, shop, navigate])
 
   return (
     <div>

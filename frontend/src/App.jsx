@@ -1,5 +1,6 @@
 import './index.css'
 import { BrowserRouter,Routes,Route, useNavigate } from 'react-router-dom'
+
 import { 
   LoginPage, 
   SignupPage, 
@@ -14,15 +15,20 @@ import {
   ShopCreatePage,
   SellerActivationPage,
   ShopLoginPage,
-} from "./Routes"
+} from "./Routes/AppRoutes"
+
+import { 
+  ShopHomePage,
+  ShopDashboardPage,
+ } from './Routes/ShopRoutes';
+
 import { ToastContainer } from 'react-toastify';
 import { useEffect } from 'react';
 import store from './redux/store';
 import { loadShop, loadUser } from './redux/actions/user';
 import { useSelector } from 'react-redux';
-import ProtectedRoute from '../ProtectedRoutes/ProtectedRoute';
-import { ShopHomePage } from './ShopRoutes';
-import SellerProtectedRoute from '../ProtectedRoutes/SellerProtectedRoute';
+import ProtectedRoute from './ProtectedRoutes/ProtectedRoute';
+import SellerProtectedRoute from './ProtectedRoutes/SellerProtectedRoute';
 
 
 function App() {
@@ -42,10 +48,6 @@ function App() {
   return ( 
     
     <>
-    {
-      loading || isLoading ? (
-        null
-      ) : (
     <div>
 
     <ToastContainer />
@@ -71,18 +73,19 @@ function App() {
       <Route path='/shop-create' element = {<ShopCreatePage />} /> 
       <Route path='/shop-login' element = {<ShopLoginPage />} /> 
       <Route path='/shop/:id' element = {
-        <SellerProtectedRoute
-        isSeller={isSeller}
-        >
+        <SellerProtectedRoute>
           <ShopHomePage />
-        </SellerProtectedRoute> 
+        </SellerProtectedRoute>
+      } /> 
+      <Route path='/dashboard' element = {
+        <SellerProtectedRoute>
+          <ShopDashboardPage />
+        </SellerProtectedRoute>
       } /> 
 
     </Routes> 
 
     </div>
-      )
-    }
     </> 
     
   )
