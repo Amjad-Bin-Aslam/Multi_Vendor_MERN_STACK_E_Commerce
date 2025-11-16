@@ -7,9 +7,7 @@ import axios from 'axios'
 import { server } from '../../../server'
 import { toast } from 'react-toastify'
 
-const ShopCreate = () => {
-
-    const navigate = useNavigate()
+const ShopCreate = () => { 
 
     const [name, setName] = useState('')
     const [phoneNumber, setPhoneNumber] = useState('')
@@ -59,7 +57,7 @@ const ShopCreate = () => {
             toast.error(error.response.data.message)
         }
 
-
+ 
 
     }
 

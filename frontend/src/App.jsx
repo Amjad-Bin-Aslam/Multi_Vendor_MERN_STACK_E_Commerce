@@ -20,8 +20,9 @@ import { useEffect } from 'react';
 import store from './redux/store';
 import { loadShop, loadUser } from './redux/actions/user';
 import { useSelector } from 'react-redux';
-import ProtectedRoute from './ProtectedRoute';
-// import ShopHomePage from './pages/ShopHomePage.jsx';
+import ProtectedRoute from '../ProtectedRoutes/ProtectedRoute';
+import { ShopHomePage } from './ShopRoutes';
+import SellerProtectedRoute from '../ProtectedRoutes/SellerProtectedRoute';
 
 
 function App() {
@@ -34,8 +35,6 @@ function App() {
   useEffect(() => {
     store.dispatch(loadUser()); 
     store.dispatch(loadShop());
-
-
   },[]) 
 
   console.log(isSeller, shop) 
@@ -67,10 +66,17 @@ function App() {
         </ProtectedRoute>
        } />
        <Route path='/activation/:activation_token' element = {<ActivationPage/>} />
+       
        {/* shop Routes */}
       <Route path='/shop-create' element = {<ShopCreatePage />} /> 
       <Route path='/shop-login' element = {<ShopLoginPage />} /> 
-      <Route path='/shop/:id' element = {<ShopHomePage />} /> 
+      <Route path='/shop/:id' element = {
+        <SellerProtectedRoute
+        isSeller={isSeller}
+        >
+          <ShopHomePage />
+        </SellerProtectedRoute> 
+      } /> 
 
     </Routes> 
 

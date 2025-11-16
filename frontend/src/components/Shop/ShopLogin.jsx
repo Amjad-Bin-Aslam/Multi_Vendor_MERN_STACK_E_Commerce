@@ -5,14 +5,18 @@ import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { server } from '../../../server'
 import { toast } from 'react-toastify'
+import { useSelector } from 'react-redux'
 
 const ShopLogin = () => {
 
     const navigate = useNavigate()
+    const { shop } = useSelector((state) => state.seller)
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [visible, setVisible] = useState(false)
+
+
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -22,7 +26,7 @@ const ShopLogin = () => {
             if (response.data.success) {
                 console.log(response.data)
                 toast.success("User Logged In successfully.")
-                navigate('/')
+                navigate('/dashboard')
                 window.location.reload();
             } else {
                 console.log(response.data.message)
@@ -30,7 +34,7 @@ const ShopLogin = () => {
             }
         } catch (error) {
             console.log(error)
-            toast.error(error.message)
+            toast.error(error.message) 
         }
 
     }
