@@ -1,17 +1,22 @@
 import { Navigate } from "react-router-dom"
 import { useSelector } from 'react-redux'
+import Loader from "../components/Layout/Loader"
 
 const SellerProtectedRoute = ({ children }) => {
   const { isSeller, isLoading } = useSelector((state) => state.seller)
 
-  if (isLoading) return null
-
-  if (!isSeller) {
+  if (isLoading === true) {
+    return (
+      <Loader />
+    )
+  } else {
+     if (!isSeller) {
     return <Navigate to={`/shop-login`} replace />
+    }
+    return children
   }
 
-  return children
-}
+};
 
 export default SellerProtectedRoute; 
  

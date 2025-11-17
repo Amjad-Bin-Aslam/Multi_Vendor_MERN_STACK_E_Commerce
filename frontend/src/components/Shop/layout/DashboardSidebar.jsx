@@ -11,8 +11,8 @@ import { HiOutlineReceiptRefund } from 'react-icons/hi'
 
 const DashboardSidebar = ({ active }) => {
     return (
-        <div className='w-full h-[90vh] bg-white shadow-sm overflow-y-scroll sticky top-0 left-0 z-10'>
-
+        <div className='w-full h-[90vh] bg-white shadow-sm overflow-y-scroll sticky top-0 left-0 z-10'>   
+ 
             {/* Side bar single item */}
             <div className='w-full flex items-center p-4 hover:bg-gray-200 cursor-pointer mb-3'>
                 <Link to='/dashboard' className='w-full flex items-center'>
@@ -21,7 +21,7 @@ const DashboardSidebar = ({ active }) => {
                         size={30} />
                     <h5 className={`lg:block hidden pl-2 text-[18px] font-[400] ${active === 1 ? "text-[crimson]" : "text-[#555]"}`}>
                         Dashboard
-                    </h5>
+                    </h5> 
                 </Link>
             </div>
 
