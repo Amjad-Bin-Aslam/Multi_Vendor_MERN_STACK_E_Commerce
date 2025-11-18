@@ -75,7 +75,7 @@ shopSchema.methods.getJwtToken = function () {
   return jwt.sign({ id: this._id}, process.env.JWT_SECRET_KEY,{
     expiresIn: process.env.JWT_EXPIRES,
   });
-};
+}; 
 
 // compare password
 shopSchema.methods.comparePassword = async function (enteredPassword) {

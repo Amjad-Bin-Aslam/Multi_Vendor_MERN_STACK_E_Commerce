@@ -5,7 +5,8 @@ const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser');
 const userRouter = require('./Routes/userRoutes');
 const shopRouter = require('./Routes/shopRoutes');
-const cors = require('cors')
+const cors = require('cors');
+const productRouter = require('./Routes/productRoutes');
 
 
 const app = express()
@@ -29,6 +30,7 @@ app.use(bodyParser.urlencoded({extended: true}))
 // API end points
 app.use('/api/user', userRouter)
 app.use('/api/seller', shopRouter)
+app.use('/api/product' , productRouter)
 
 
 app.get('/', (req,res) => {
