@@ -6,12 +6,12 @@ import { AiOutlineUpload } from 'react-icons/ai'
 
 const CreateProduct = () => {
 
-    const { shop } = useSelector((state) => state.seller)
+    const { shop } = useSelector((state) => state.seller) 
 
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
-    const [images , setImages] = useState([])
+    const [images , setImages] = useState([]) 
     const [name, setName] = useState('')
     const [description , setDescription] = useState('')
     const [category , setCategory] = useState('')
@@ -21,7 +21,7 @@ const CreateProduct = () => {
     const [stock, setStock] = useState()
 
     const handleSubmit = (e) => {
-        e.preventDefault()
+        e.preventDefault() 
     }
 
     const handleImageChange = (e) => {
