@@ -13,7 +13,7 @@ const ShopLoginPage = () => {
 
     if (isSeller === true) {
       navigate(`/dashboard`)
-    }
+    } 
   }, [isSeller, navigate])
 
   return ( 

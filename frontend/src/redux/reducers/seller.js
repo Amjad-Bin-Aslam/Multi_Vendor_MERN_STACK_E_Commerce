@@ -12,7 +12,7 @@ export const sellerReducer = createReducer(initialState, (builder) => {
       state.isLoading = true;
     })
     .addCase("LoadingSellerSuccess", (state, action) => {
-      state.isSeller = true;
+      state.isSeller = action.payload ? true : false;
       state.isLoading = false;
       state.shop = action.payload;
     })

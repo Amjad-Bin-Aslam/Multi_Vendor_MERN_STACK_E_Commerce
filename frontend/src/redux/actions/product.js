@@ -2,7 +2,7 @@ import axios from "axios";
 import { server } from "../../../server";
 
 
-//  Create Product
+//  Create Product of shop
 export const createProduct = (newForm) => async (dispatch) => {
  
     try {
@@ -31,7 +31,7 @@ export const createProduct = (newForm) => async (dispatch) => {
 
 
 
-//  get All products
+//  get All products of shop
 export const getAllProdcutsShop = (id) => async (dispatch) => {
 
     try {
@@ -55,3 +55,31 @@ export const getAllProdcutsShop = (id) => async (dispatch) => {
     }
 
 }
+
+
+
+// delete product of shop
+export const deleteShopProduct = (id) => async (dispatch) => {
+
+    try {
+        dispatch({
+            type: "deleteProductRequest",
+        })
+
+        const {data} = await axios.delete(`${server}/api/product/delete-shop-product/${id}`, {
+            withCredentials: true
+        } )
+
+        dispatch({
+            type: "deleteProductSuccess",
+            payload: data.message
+        })
+
+    } catch (error) {
+        dispatch({
+            type: "deleteProductFail",
+            payload: error.response.data.message || error.message
+        })
+    }
+
+} 

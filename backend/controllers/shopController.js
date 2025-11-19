@@ -225,6 +225,25 @@ const loadShop = async (req, res) => {
 
 
 
+// Logout the shop
+const logoutShop = async (req , res) => {
+
+    try {
+
+       res.cookie("seller_token", null , {
+        expires: new Date(Date.now()),
+        httpOnly: true,
+       }) 
+
+       return res.status(201).json({ success: true , message: "Logged out successfully." })
+        
+    } catch (error) {
+       console.log(error) 
+       return res.json({ success: false, message: error.message })
+    }
+}
+
+
 // Create activation token
 const createActivationToken = (seller) => {
     return jwt.sign(seller , process.env.ACTIVATION_SECRET ,{
@@ -240,5 +259,6 @@ module.exports = {
     createShop,
     activateShop,
     shopLogin,
-    loadShop
+    loadShop,
+    logoutShop
 }

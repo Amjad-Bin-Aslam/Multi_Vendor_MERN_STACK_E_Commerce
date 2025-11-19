@@ -58,7 +58,38 @@ const getAllProdcutsShop = async (req , res) => {
 }  
 
 
+
+// delete product
+// delete-shop-product/:id
+const deleteShopProduct = async (req , res) => {
+
+    try {
+
+        const productId = req.params.id
+
+        const product  = await productModel.findByIdAndDelete(productId)
+
+        if(!product){
+            return res.json({ success: false , message: "Product not found with this ID!" })
+        }
+
+        return res.json({
+            success: true,
+            message: "Product deleted successfully!"
+        })
+        
+    } catch (error) {
+        console.log(error)
+        return res.json({ success: false, message: error.message })
+    }
+
+}
+
+
+
+ 
 module.exports = {
     createProduct,
-    getAllProdcutsShop
+    getAllProdcutsShop,
+    deleteShopProduct,
 }

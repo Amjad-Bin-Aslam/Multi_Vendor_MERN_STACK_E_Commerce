@@ -7,17 +7,17 @@ import { useEffect } from 'react'
 const ShopCreatePage = () => {
 
   const navigate = useNavigate()
-  const { isSeller , shop } = useSelector((state) => state.seller)
+  const { isSeller, isLoading , shop } = useSelector((state) => state.seller)
 
   useEffect(() => {
-    if(isSeller === true){
+    if( !isLoading && isSeller && shop){
       navigate(`/shop/${shop._id}`)
     }
-  }, [isSeller, shop, navigate])
+  }, [isSeller, shop, navigate,isLoading]) 
 
   return (
     <div>
-      <ShopCreate />
+      <ShopCreate /> 
     </div>
   )
 }

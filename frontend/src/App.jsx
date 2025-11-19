@@ -76,7 +76,7 @@ function App() {
       <Route path='/shop-login' element = {<ShopLoginPage />} /> 
       <Route path='/shop/:id' element = {
         <SellerProtectedRoute>
-          <ShopHomePage />
+          <ShopHomePage /> 
         </SellerProtectedRoute>
       } /> 
       <Route path='/dashboard' element = {

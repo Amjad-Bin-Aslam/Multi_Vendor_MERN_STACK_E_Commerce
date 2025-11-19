@@ -7,7 +7,7 @@ const ShopAllProductsPage = () => {
   return (
      <div>
           <DashboardHeader />
-          <div className='flex items-center justify-between w-full'>
+          <div className='flex justify-between w-full'>
             <div className='w-[80px] lg:w-[330px]'>
                <DashboardSidebar active = {3} />
             </div>

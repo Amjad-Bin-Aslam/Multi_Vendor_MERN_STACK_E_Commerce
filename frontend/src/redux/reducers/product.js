@@ -6,6 +6,7 @@ const initialState = {
 
 export const productReducer = createReducer(initialState, (builder) => {
   builder
+  // create product of shop
     .addCase("productCreateRequest", (state) => {
       state.isLoading = true;
     })
@@ -23,7 +24,7 @@ export const productReducer = createReducer(initialState, (builder) => {
       state.success = false;
       state.product = null;
     })
-    //  get all products
+    //  get all products of shop
     .addCase("getAllProductsShopRequest", (state) => {
       state.isLoading = true;
     })
@@ -33,6 +34,18 @@ export const productReducer = createReducer(initialState, (builder) => {
     })
     .addCase("getAllProductsShopFail", (state,action) => {
       state.isLoading = false;
+      state.error = action.payload
+    })
+    // delete shop product
+    .addCase("deleteProductRequest", (state) => {
+      state.isLoading = true
+    })
+    .addCase("deleteProductSuccess", (state,action) => {
+      state.isLoading = false,
+      state.message = action.payload
+    })
+    .addCase("deleteProductFail", (state,action) => {
+      state.isLoading = false,
       state.error = action.payload
     })
     .addCase("clearError", (state) => {

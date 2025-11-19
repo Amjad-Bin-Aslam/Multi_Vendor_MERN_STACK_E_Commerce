@@ -30,10 +30,11 @@ const isAuthenticated = async (req , res , next) => {
 
 // seller authentication middleware
 const isSellerAuthenticated = async (req , res , next) => {
-     
+      
     try { 
          
-        const { seller_token } = req.cookies;
+    const { seller_token } = req.cookies;
+    
     if(!seller_token){
         return res.json({ success: false, message: "Please login to continue." }) 
     }
