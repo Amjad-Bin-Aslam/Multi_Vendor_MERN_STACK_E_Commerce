@@ -55,3 +55,27 @@ export const getAllEventsShop = (id) => async (dispatch) => {
     }
 
 }
+
+
+// delete Event from shop
+export const deleteEventShop = (id) => async (dispatch) => {
+    try {
+        
+        dispatch({
+            type: "deleteEventRequest"
+        })
+
+        const { data } = await axios.delete(`${server}/api/event/delete-event-shop/${id}`, { withCredentials:true })
+
+        dispatch({
+            type: "deleteEventSucces",
+            payload: data.message
+        })
+
+    } catch (error) {
+        dispatch({
+            type: "deleteEventFail",
+            payload: error.response.data.messaga || error.message
+        })
+    }
+}

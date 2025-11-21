@@ -14,4 +14,5 @@ shopRouter.post('/logout-shop', logoutShop)
 
 shopRouter.get('/get-shop', isSellerAuthenticated, loadShop)
 
+
 module.exports = shopRouter;

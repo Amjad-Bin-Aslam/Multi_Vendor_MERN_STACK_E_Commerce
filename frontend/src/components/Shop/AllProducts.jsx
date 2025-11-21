@@ -10,16 +10,21 @@ import { AiOutlineDelete, AiOutlineEye } from 'react-icons/ai';
 import Loader from '../Layout/Loader';
 import { toast } from 'react-toastify';
 
+
 const AllProducts = () => {
 
-    const { products , isLoading} = useSelector((state) => state.product)
-    const { shop } = useSelector((state) => state.seller)
+    // Guard against undefined reducer slices
+    const productState = useSelector((state) => state.product || {})
+    const { products = [], isLoading = true } = productState
+    const { shop } = useSelector((state) => state.seller || {})
 
     const dispatch = useDispatch()
 
     useEffect(() => {
+      if (shop && shop._id) {
         dispatch(getAllProdcutsShop(shop._id))
-    },[dispatch])
+      }
+    },[dispatch, shop])
 
     const handleDelete = (id) => {
       // console.log(id)

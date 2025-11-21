@@ -33,7 +33,20 @@ export const eventReducer = createReducer(initialState, (builder) => {
         state.isLoading = false
         state.events = action.payload
     })
-    .addCase("getAllEventsShopFail" , (state,action) => {
+    .addCase("getAllEventsShopFail", (state,action) => {
+        state.isLoading = false
+        state.error = action.payload
+    })
+    
+    // delete event shop
+    .addCase('deleteEventRequest', (state,action) => {
+        state.isLoading = false
+    })
+    .addCase('deleteEventSucces', (state,action) => {
+        state.isLoading = true
+        state.message = action.payload
+    })
+    .addCase('deleteEventFail', (state,action) => {
         state.isLoading = false
         state.error = action.payload
     })

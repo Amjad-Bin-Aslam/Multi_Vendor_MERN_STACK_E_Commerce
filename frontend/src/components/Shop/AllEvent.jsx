@@ -9,7 +9,7 @@ import Button from '@mui/material/Button';
 import { AiOutlineDelete, AiOutlineEye } from 'react-icons/ai';
 import Loader from '../Layout/Loader';
 import { toast } from 'react-toastify';
-import { getAllEventsShop } from '../../redux/actions/event';
+import { deleteEventShop, getAllEventsShop } from '../../redux/actions/event';
 
 const AllEvents = () => {
 
@@ -24,7 +24,7 @@ const AllEvents = () => {
 
     const handleDelete = (id) => {
       // console.log(id)
-    //   dispatch(deleteShopProduct(id))
+      dispatch(deleteEventShop(id))
       toast.success("product deleted successfully!")
       window.location.reload()
     }

@@ -1,5 +1,6 @@
 const productModel = require("../models/productModel")
 const shopModel = require("../models/shopModel")
+const fs = require('fs')
 
 
 // Create Product
@@ -31,7 +32,7 @@ const createProduct = async (req , res) => {
             })
         }
 
-    } catch (error) {
+    } catch (error) { 
         console.log(error)
         return res.status(400).json({ success: false, message: error.message })
     }
@@ -67,7 +68,20 @@ const deleteShopProduct = async (req , res) => {
 
         const productId = req.params.id
 
-        const product  = await productModel.findByIdAndDelete(productId)
+        const productData = await productModel.findById(productId)
+
+        productData.images.forEach((imageUlr) => {
+            const filename = imageUlr
+            const filePath = `uploads/${filename}`
+
+            fs.unlink(filePath , (err) => {
+                if(err){
+                    console.log(err)
+                }
+            })
+        })
+
+        const product = await productModel.findByIdAndDelete(productId)
 
         if(!product){
             return res.json({ success: false , message: "Product not found with this ID!" })

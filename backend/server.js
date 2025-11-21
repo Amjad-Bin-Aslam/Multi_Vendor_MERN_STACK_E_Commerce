@@ -8,6 +8,7 @@ const shopRouter = require('./Routes/shopRoutes');
 const cors = require('cors');
 const productRouter = require('./Routes/productRoutes');
 const eventRouter = require('./Routes/eventRoutes');
+const couponCodeRouter = require('./Routes/couponCodeRoutes');
 
 
 const app = express()
@@ -33,6 +34,7 @@ app.use('/api/user', userRouter)
 app.use('/api/seller', shopRouter)
 app.use('/api/product' , productRouter)
 app.use('/api/event', eventRouter)
+app.use('/api/coupon', couponCodeRouter)
 
 
 app.get('/', (req,res) => {

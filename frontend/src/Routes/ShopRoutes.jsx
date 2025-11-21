@@ -4,6 +4,7 @@ import ShopCreateProductPage from '../pages/Shop/ShopCreateProductPage'
 import ShopAllProductsPage from '../pages/Shop/ShopAllProductsPage'
 import ShopCreateEventPage from '../pages/Shop/ShopCreateEventPage'
 import ShopAllEventsPage from '../pages/Shop/ShopAllEventsPage'
+import ShopAllCouponsCodePage from '../pages/Shop/ShopAllCouponsCodePage'
 
 export {
     ShopHomePage,
@@ -11,5 +12,6 @@ export {
     ShopCreateProductPage,
     ShopAllProductsPage,
     ShopCreateEventPage,
-    ShopAllEventsPage
+    ShopAllEventsPage,
+    ShopAllCouponsCodePage
 }

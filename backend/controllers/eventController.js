@@ -1,5 +1,6 @@
 const eventModel = require("../models/eventModel")
 const shopModel = require("../models/shopModel")
+const fs = require('fs')
 
 
 // Create events
@@ -62,13 +63,26 @@ const deleteShopEvent = async (req , res) => {
 
         const eventId = req.params.id
 
-        const event  = await eventModel.findByIdAndDelete(eventId)
+        const eventData  = await eventModel.findById(eventId)
+
+        eventData.images.forEach((imageUrl) => {
+            const filename = imageUrl
+            const filePath = `uploads/${filename}`
+
+            fs.unlink(filePath, (err) => {
+                if(err){
+                    console.log(err)
+                }
+            })
+        })
+
+        const event = await eventModel.findByIdAndDelete(eventId)
 
         if(!event){
             return res.json({ success: false , message: "Event not found with this ID!" })
         }
 
-        return res.json({
+        return res.json({ 
             success: true,
             message: "Event deleted successfully!"
         })
