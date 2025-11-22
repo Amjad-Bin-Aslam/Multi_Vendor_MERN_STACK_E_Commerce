@@ -19,6 +19,12 @@ export const userReducer = createReducer(initialState, (builder) => {
       state.error = action.payload;
       state.isAuthenticated = false;
     })
+    // Logout user state clear
+    .addCase('logoutUser', (state) => {
+      state.isAuthenticated = false;
+      state.user = null;
+      state.loading = false;
+    })
     .addCase("clearError", (state) => {
       state.error = null;
     });

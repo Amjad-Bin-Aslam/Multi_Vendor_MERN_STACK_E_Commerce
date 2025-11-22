@@ -82,4 +82,28 @@ export const deleteShopProduct = (id) => async (dispatch) => {
         })
     }
 
-} 
+}
+
+
+// get All products for HomePage
+export const getAllProducts = () => async (dispatch) => {
+    try {
+
+        dispatch({
+            type: "getAllProductsRequest"
+        })
+
+        const { data } = await axios.get(`${server}/api/product/get-all-products`)
+
+        dispatch({
+            type: "getAllProductsSuccess",
+            payload: data.allProducts
+        })
+        
+    } catch (error) {
+        dispatch({
+            type: "getAllProductsFail",
+            payload: error.response.data.message || error.message
+        })
+    }
+}

@@ -244,6 +244,23 @@ const logoutShop = async (req , res) => {
 }
 
 
+
+// Get shop Info
+const getShopInfo = async (req, res) => {
+    try {
+        
+        const shopId = req.params.id
+        const shopInfo = await shopModel.findById(shopId)
+
+        return res.json({ success: true, shopInfo })
+
+    } catch (error) {
+        console.log(error)
+        return res.json({ success: false, message: error.message })
+    }
+}
+
+
 // Create activation token
 const createActivationToken = (seller) => {
     return jwt.sign(seller , process.env.ACTIVATION_SECRET ,{
@@ -260,5 +277,6 @@ module.exports = {
     activateShop,
     shopLogin,
     loadShop,
-    logoutShop
+    logoutShop,
+    getShopInfo
 }

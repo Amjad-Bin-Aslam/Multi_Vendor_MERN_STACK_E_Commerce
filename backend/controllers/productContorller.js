@@ -19,9 +19,9 @@ const createProduct = async (req , res) => {
             const productData = req.body
             productData.images = imageUrls
             productData.shop = shop
-            // productData.shopId = shopId
-            // // ensure sold_out is set if client didn't provide it (model also has a default)
-            // if (productData.sold_out === undefined) productData.sold_out = 0
+            productData.shopId = shopId
+            
+            if (productData.sold_out === undefined) productData.sold_out = 0
 
             const product = await productModel.create(productData)
 
@@ -41,14 +41,11 @@ const createProduct = async (req , res) => {
  
 
 // get all products 
-const getAllProdcutsShop = async (req , res) => {
+const getAllProductsShop = async (req , res) => {
 
     try {
 
-        const shopId = req.params.id 
-        const products = await productModel.find({shopId})
-
-        // const products = await productModel.find({shopId: req.params.id})
+        const products = await productModel.find({shopId: req.params.id})
 
         return res.status(201).json({ success: true, products })
         
@@ -101,9 +98,30 @@ const deleteShopProduct = async (req , res) => {
 
 
 
+// get All products for Homepage
+const getAllProducts = async (req, res) => {
+
+    try {
+
+        const allProducts = await productModel.find().sort({ createdAt: -1})
+        
+        return res.status(201).json({ 
+            success: true, 
+            allProducts
+         })
+
+    } catch (error) {
+        console.log(error)
+        return res.status(400).json({ success: false, message: error.message })
+    }
+
+} 
+
+
  
 module.exports = {
     createProduct,
-    getAllProdcutsShop,
-    deleteShopProduct,
+    getAllProductsShop,
+    deleteShopProduct, 
+    getAllProducts,
 }

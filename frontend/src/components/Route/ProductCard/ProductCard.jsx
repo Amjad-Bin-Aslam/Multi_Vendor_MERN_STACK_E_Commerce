@@ -9,7 +9,7 @@ const ProductCard = ({ data }) => {
   const [click, setClick] = useState(false)
   const [open, setOpen] = useState(false)
 
-  const d = data.name
+  const d = data?.name || ''
   const product_name = d.replace(/\s+/g, "-");
 
   return (
@@ -20,10 +20,14 @@ const ProductCard = ({ data }) => {
         <div className='flex justify-end'>
         </div>
         <Link to={`/product/${product_name}`}>
-          <img className='w-full h-[170px] object-contain' src={data.image_Url[0].url} alt="" />
+          <img
+            className='w-full h-[170px] object-contain'
+            src={data?.image_Url?.[0]?.url || '/fallback-product.png'}
+            alt={data?.name || 'product'}
+          />
         </Link>
         <Link to="/">
-          <h5 className={`${styles.shop_name}`}> {data.shop.name} </h5>
+          <h5 className={`${styles.shop_name}`}> {data?.shop?.name || 'Shop'} </h5>
         </Link>
         <Link to={`/product/${product_name}`}>
           <h4 className='pb-3 font-[500]'>
@@ -41,15 +45,15 @@ const ProductCard = ({ data }) => {
           {/* Name and price */}
           <div className='py-2 flex items-center justify-between'>
             <div className='flex'>
-              <h5 className={`${styles.productDiscountPrice}`}>
-                {data.price === 0 ? data.price : data.discount_price}$
-              </h5>
+                <h5 className={`${styles.productDiscountPrice}`}>
+                  {data?.price === 0 ? "0$" : (data?.discount_price ? `${data.discount_price}$` : '')}
+                </h5>
               <h4 className={`${styles.price}`}>
-                {data.price ? data.price + "$" : null}
+                  {data?.price ? `${data.price}$` : null}
               </h4>
             </div>
             <span className='font-[400] text-[17px] text-[#68d284]'>
-              {data.total_sell} Sold
+              {data?.total_sell ?? 0} Sold 
             </span>
           </div>
         </Link>

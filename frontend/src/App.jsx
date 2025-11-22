@@ -25,6 +25,7 @@ import {
   ShopCreateEventPage,
   ShopAllEventsPage,
   ShopAllCouponsCodePage,
+  ShopPreviewPage
  } from './Routes/ShopRoutes';
 
 import { ToastContainer } from 'react-toastify';
@@ -68,7 +69,7 @@ function App() {
       <Route path='/events' element = {<EventsPage />} />
       <Route path='/faq' element = {<FAQPage />} /> 
       <Route path='/profile' element = { 
-        <ProtectedRoute isAuthenticated={isAuthenticated}>
+        <ProtectedRoute isAuthenticated={isAuthenticated} loading={loading} >
           <ProfilePage />
         </ProtectedRoute>
        } />
@@ -77,6 +78,7 @@ function App() {
        {/* shop Routes */}
       <Route path='/shop-create' element = {<ShopCreatePage />} /> 
       <Route path='/shop-login' element = {<ShopLoginPage />} /> 
+      <Route path='/shop/preview/:id' element = {<ShopPreviewPage/>} />
       <Route path='/shop/:id' element = {
         <SellerProtectedRoute>
           <ShopHomePage /> 

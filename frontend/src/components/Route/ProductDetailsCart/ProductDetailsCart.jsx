@@ -7,8 +7,12 @@ import {
   AiOutlineMessage,
 } from "react-icons/ai";
 import styles from "../../../styles/styles";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const ProductDetailsCart = ({ setOpen, data }) => {
+
+  const { shop } = useSelector((state) => state.seller || {})
 
   const [count, setCount] = useState(1);
   const [click, setClick] = useState(false);
@@ -45,18 +49,21 @@ const ProductDetailsCart = ({ setOpen, data }) => {
               {/* Left: Product Image + Seller Info */}
               <div className="flex-1 flex flex-col items-center lg:items-start">
                 <img
-                  src={data.image_Url[0].url}
+                
+                  src={data.images[0]}
                   alt={data.name}
                   className="w-full max-w-[400px] rounded-md object-contain"
                 />
 
                 {/* Seller Info */}
                 <div className="flex items-center mt-5">
+                  <Link to={`shop/preview/${shop._id}`}>
                   <img
                     className="w-[50px] h-[50px] rounded-full mr-3"
-                    src={data.shop.shop_avatar.url}
+                    src={data.shop.avatar}
                     alt={data.shop.name}
                   />
+                  </Link>
                   <div>
                     <h3 className={`${styles.shop_name}`}>{data.shop.name}</h3>
                     <h5 className="text-[15px] text-gray-600">

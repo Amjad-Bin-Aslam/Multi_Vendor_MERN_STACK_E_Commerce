@@ -12,10 +12,17 @@ export const loadUser =  () => async (dispatch) => {
 
         const { data } = await axios.get(`${server}/api/user/load-user`, {withCredentials: true})
 
-        dispatch({
-            type: "LoadingUserSuccess",
-            payload: data.user
-        })
+        if (data.success === false || !data.user) {
+            dispatch({
+                type: "LoadUserFail",
+                payload: data.message || "Authentication failed"
+            });
+        } else {
+            dispatch({
+                type: "LoadingUserSuccess",
+                payload: data.user
+            })
+        }
 
     } catch (error) {
         dispatch({
@@ -37,10 +44,17 @@ export const loadShop =  () => async (dispatch) => {
 
         const { data } = await axios.get(`${server}/api/seller/get-shop`, {withCredentials: true})
 
-        dispatch({
-            type: "LoadingSellerSuccess",
-            payload: data.shop
-        })
+        if (data.success === false || !data.shop) {
+            dispatch({
+                type: "LoadSellerFail",
+                payload: data.message || "Shop authentication failed"
+            });
+        } else {
+            dispatch({
+                type: "LoadingSellerSuccess",
+                payload: data.shop 
+            })
+        }
 
     } catch (error) {
         dispatch({
