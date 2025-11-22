@@ -13,9 +13,9 @@ const BestDeals = () => {
   
      const [data , setData] = useState([]);
 
-     useEffect(() => {
-      dispatch(getAllProducts())
-     },[dispatch])
+    //  useEffect(() => {
+    //   dispatch(getAllProducts())
+    //  },[dispatch])
 
      useEffect(()=>{ 
         if (Array.isArray(allProducts) && allProducts.length > 0) {

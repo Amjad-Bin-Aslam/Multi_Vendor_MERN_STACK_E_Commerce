@@ -35,6 +35,7 @@ import { loadShop, loadUser } from './redux/actions/user';
 import { useSelector } from 'react-redux';
 import ProtectedRoute from './ProtectedRoutes/ProtectedRoute';
 import SellerProtectedRoute from './ProtectedRoutes/SellerProtectedRoute';
+import { getAllProducts } from './redux/actions/product';
 
 
 function App() {
@@ -42,11 +43,12 @@ function App() {
   const navigate = useNavigate();
 
   const { loading, isAuthenticated } = useSelector((state) => state.user)
-  const { isSeller, shop, isLoading } = useSelector((state) => state.seller)
+  const { isSeller, shop } = useSelector((state) => state.seller)
 
   useEffect(() => {
     store.dispatch(loadUser()); 
     store.dispatch(loadShop());
+    store.dispatch(getAllProducts());
   },[]) 
 
   console.log(isSeller, shop) 

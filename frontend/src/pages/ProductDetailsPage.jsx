@@ -3,21 +3,28 @@ import { useParams } from 'react-router-dom'
 import Header from '../components/Layout/Header'
 import Footer from '../components/Layout/Footer'
 import ProductDetails from "../components/Products/ProductDetails"
-import { productData } from '../static/data'
 import SuggestedProduct from '../components/Products/SuggestedProduct'
+import { useSelector } from 'react-redux'
 
 const ProductDetailsPage = () => {
+
+  const productState = useSelector((state) => state.product || {})
+  const { allProducts  } = productState
 
   const { name } = useParams()
   const [data , setData] = useState(null)
   const productName = name.replace(/-/g, " ")
 
   useEffect(()=>{
-    const data = productData.find((item) => item.name === productName);
-    setData(data)
-  },[])
+    if (Array.isArray(allProducts) && allProducts.length > 0) {
+      const found = allProducts.find((item) => item.name === productName)
+      setData(found)
+    } 
+  },[allProducts, productName])
 
-  // console.log(name)
+  
+
+  console.log(allProducts)
 
   return (
     <div>
