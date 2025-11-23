@@ -12,6 +12,7 @@ const ProductCard = ({ data }) => {
   const d = data?.name || ''
   const product_name = d.replace(/\s+/g, "-");
 
+  
   return (
     <>
 

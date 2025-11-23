@@ -1,4 +1,5 @@
 const eventModel = require("../models/eventModel")
+const { find } = require("../models/productModel")
 const shopModel = require("../models/shopModel")
 const fs = require('fs')
 
@@ -95,9 +96,25 @@ const deleteShopEvent = async (req , res) => {
 }
 
 
+// get All the events
+const getAllEvents = async (req, res) => {
+    try {
+
+        const allEvents = await eventModel.find()
+
+        return res.json({ success: true, allEvents })
+        
+    } catch (error) {
+        console.log(error)
+        return res.json({ success: false, message: error.message })
+    }
+}
+
+
 
 module.exports = {
     createEvent,
     getAllEventsShop,
-    deleteShopEvent
+    deleteShopEvent,
+    getAllEvents,
 }

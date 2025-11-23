@@ -23,7 +23,7 @@ const ProductDetailsCart = ({ setOpen, data }) => {
   const decrementCount = () => {
     if(count > 1) {
         setCount(count - 1)
-    }
+    } 
   }
 
   const handleMessageSubmit = () => {
@@ -57,7 +57,7 @@ const ProductDetailsCart = ({ setOpen, data }) => {
 
                 {/* Seller Info */}
                 <div className="flex items-center mt-5">
-                  <Link to={`shop/preview/${shop._id}`}>
+                  <Link to={`/shop/preview/${data?.shop?._id || data?.shopId || shop?._id || ''}`}>
                   <img
                     className="w-[50px] h-[50px] rounded-full mr-3"
                     src={data.shop.avatar}

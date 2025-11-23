@@ -36,6 +36,7 @@ import { useSelector } from 'react-redux';
 import ProtectedRoute from './ProtectedRoutes/ProtectedRoute';
 import SellerProtectedRoute from './ProtectedRoutes/SellerProtectedRoute';
 import { getAllProducts } from './redux/actions/product';
+import { getAllEvents } from './redux/actions/event';
 
 
 function App() {
@@ -49,6 +50,7 @@ function App() {
     store.dispatch(loadUser()); 
     store.dispatch(loadShop());
     store.dispatch(getAllProducts());
+    store.dispatch(getAllEvents())
   },[]) 
 
   console.log(isSeller, shop) 

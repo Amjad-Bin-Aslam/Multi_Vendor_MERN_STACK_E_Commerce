@@ -1,11 +1,19 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styles from '../../styles/styles'
 import EventCard from './EventCard'
+import { useSelector } from 'react-redux'
 
 const Events = () => {
+
+  const { allEvents, isLoading } = useSelector((state) => state.event)
+  
+  // console.log(allEvents)
+
   return (
     <div>
-      <div>
+      {
+        !isLoading && (
+          <div>
             <div className={`${styles.section}`}>
                 <div className={`${styles.heading}`}>
                     <h1 className='font-bold mb-5'> 
@@ -14,11 +22,13 @@ const Events = () => {
                 </div>
 
                 <div className='w-full'>
-                    <EventCard />
+                    <EventCard data={allEvents && allEvents[0]} />
                 </div>
 
             </div>
         </div>
+        )
+      }
     </div>
   )
 }

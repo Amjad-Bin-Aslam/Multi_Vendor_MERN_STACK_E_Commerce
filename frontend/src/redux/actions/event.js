@@ -79,3 +79,29 @@ export const deleteEventShop = (id) => async (dispatch) => {
         })
     }
 }
+
+
+// get All events for user 
+export const getAllEvents = () => async (dispatch) => {
+
+    try {
+        
+        dispatch({
+            type:"getAllEventsRequest"
+        })
+
+        const { data } = await axios.get(`${server}/api/event/get-all-events`)
+
+        dispatch({
+            type: "getAllEventsSuccess",
+            payload: data.allEvents
+        })
+
+    } catch (error) {
+        dispatch({
+            type: "getAllEventsFail",
+            payload: error.response.data.messaga || error.message
+        })
+    }
+
+}

@@ -10,15 +10,14 @@ import { getAllProdcutsShop } from '../../redux/actions/product'
 const ShopProfileData = ({ isOwner }) => {
 
     const { products } = useSelector((state) => state.product || {} )
-    const { shop } = useSelector((state) => state.seller || {})
     const dispatch = useDispatch()
     const { id } = useParams()
 
     useEffect(() => {
-        if(shop && id){
+        if(id){
             dispatch(getAllProdcutsShop(id))
         }
-    },[dispatch, shop, id])
+    },[dispatch, id])
 
     const [active, setActive] = useState(1)
 

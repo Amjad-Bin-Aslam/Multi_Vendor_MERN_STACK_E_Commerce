@@ -1,9 +1,11 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styles from '../../styles/styles'
 import { AiFillHeart, AiOutlineHeart, AiOutlineMessage, AiOutlineShoppingCart } from 'react-icons/ai'
 import { Link } from 'react-router-dom'
 import { backend } from '../../../server'
+import { useDispatch, useSelector } from 'react-redux'
+import { getAllProdcutsShop } from '../../redux/actions/product'
 
 const ProductDetails = ({ data }) => {
 
@@ -11,6 +13,18 @@ const ProductDetails = ({ data }) => {
     const [click, setClick] = useState(false)
     const [select, setSelect] = useState(0)
     const navigate = useNavigate()
+
+    const { products } = useSelector((state) => state.product || {} )
+    const { shop } = useSelector((state) => state.seller || {})
+    const dispatch = useDispatch()
+    
+    useEffect(() => {
+        if(shop && data){
+            dispatch(getAllProdcutsShop(data && data.shop._id ))
+        }
+    },[dispatch, shop, data])
+
+    // console.log(data?.shop._id)
 
     const incrementCount = () => {
         setCount(count + 1)
@@ -28,57 +42,60 @@ const ProductDetails = ({ data }) => {
 
     console.log(data)
 
+    console.log(products)    
+
 return (
     <div className='bg-white'>
         {
         data ? (
-            <div className={`${styles.section} w-[90%] 800px:w-[80%]`}>
+            <div className={`${styles.section} w-[90%] lg:w-[80%]`}>
                 <div className="w-full py-5">
-                    <div className='block w-full 800px:flex'>
-                        {/* Left side */}
-                        <div className='w-full 800px:w-[90%]'>
-                            <img 
-                            // src={data.image_Url[select].url} 
-                            alt="" 
-                            className='w-[40%]'
-                            />
-                            <div className='w-full flex'>
-                                <div className={`${select === 0 ? 'border' : 'null'} cursor-pointer`}>
-                                    <img 
-                                    src={`${backend}${data.images && data.images[0] }`} 
-                                    alt=""
-                                    className='h-[200px]'
-                                    onClick={() => setSelect(0)}
-                                    />
-                                </div>
-                                <div className={`${select === 1 ? 'border' : 'null'} cursor-pointer`}>
-                                    <img src={data?.image_Url[1].url} alt=""
-                                        className='h-[200px]'
-                                        onClick={() => setSelect(1)}
-                                    />
-                                </div>
+                    <div className='block w-full lg:flex lg:gap-8'>
+                        {/* Left side - Images */}
+                        <div className='w-full lg:w-[50%]'>
+                            {/* Main selected image */}
+                            <div className='w-full mb-4'>
+                                <img
+                                src={`${backend}${data && data.images[select]}`}
+                                alt={data?.name || 'Product'}
+                                className='w-full h-[400px] object-contain rounded'
+                                />
+                            </div>
+                            {/* Thumbnails */}
+                            <div className='w-full flex flex-wrap gap-2'>
+                                {data && data.images.map((img, index) => (
+                                    <div
+                                        key={index}
+                                        className={`cursor-pointer rounded border ${select === index ? 'border-blue-500' : 'border-gray-300'} p-1`}
+                                        onClick={() => setSelect(index)}
+                                    >
+                                        <img
+                                        src={`${backend}${img}`}
+                                        alt={`${data?.name} ${index + 1}`}
+                                        className='h-[90px] w-[90px] object-cover'
+                                        />
+                                    </div>
+                                ))}
                             </div>
                         </div>
-                        {/* Right side */}
-                        <div className='w-full 800px:w-[50%] pt-5'>
-                            <h1 className={`${styles.productTitle}`}>
-                                {data.name}
+                        {/* Right side - Info */}
+                        <div className='w-full lg:w-[50%] pt-5 lg:pt-0'>
+                            <h1 className={`${styles.productTitle} text-[30px] font-[600] mb-2`}>
+                                {data?.name}
                             </h1>
-                            <p>
-                                {data.description}
-                            </p>
+                            <p> {data?.description} </p>
                             <div className='flex pt-3'>
                                 <h4 className={`${styles.productDiscountPrice}`}>
-                                    {data.discount_price}$
+                                    {data?.discountPrice}$
                                 </h4>
                                 <h3 className={`${styles.price}`}>
-                                    {data.price ? data.price + "$" : null}
+                                    {data.originalPrice ? data.originalPrice + "$" : null}
                                 </h3>
                             </div>
 
                             <div className="flex items-center justify-between mt-10 mb-6">
                                 {/* Quantity Counter */}
-                                <div className="flex items-center">
+                                <div>
                                     <button
                                         className="bg-gradient-to-r from-teal-400 to-teal-500 text-white font-bold rounded-l-md px-4 py-2 hover:opacity-80 transition cursor-pointer"
                                         onClick={decrementCount}
@@ -123,22 +140,24 @@ return (
                                 </span>
                             </div>
                             <div className='flex items-center pt-8'>
-                                <img src={data.shop.shop_avatar.url} alt=""
-                                    className='w-[50px] h-[50px] rounded-full mr-2'
+                                <img 
+                                src={`${backend}${data?.shop?.avatar}`} 
+                                alt=""
+                                className='w-[50px] h-[50px] rounded-full mr-2'
                                 />
                                 <div className='pr-8'>
                                     <h3 className={`${styles.shop_name} pb-1 pt-1`}>
                                         {data.shop.name}
                                     </h3>
                                     <h5 className='pb-3 text-[15px]'>
-                                        {(data.shop.ratings)} Ratings
+                                        (4) Ratings
                                     </h5>
                                 </div>
                                 <div className={`w-[150px] my-3 flex items-center justify-center rounded-xl cursor-pointer bg-[#6443d1] mt-4 h-11`}>
                                     <span className='text-white flex items-center'>
                                         Send Message <AiOutlineMessage className='ml-1' />
                                     </span>
-                                </div>
+                                </div> 
                             </div>
                         </div>
                     </div>
@@ -146,7 +165,7 @@ return (
 
                 {/* Product details info card */}
 
-                <ProductDetailsInfo data={data} />
+                <ProductDetailsInfo data={data} products={products} />
                 <br />
                 <br />
             </div>
@@ -156,15 +175,15 @@ return (
 )
 }
 
-const ProductDetailsInfo = ({ data }) => {
+const ProductDetailsInfo = ({ data,products }) => {
 
     const [active, setActive] = useState(1)
 
     return (
-        <div className='bg-[#f5f6fb] px-3 800px:px-10 py-2 rounded'>
+        <div className='bg-[#f5f6fb] px-3 lg:px-10 py-2 rounded'>
             <div className='w-full flex justify-between border-b pt-10 pb-2'>
                 <div className='relative'>
-                    <h5 className='text-[#000] text-[18px] leading-5 font-[600] cursor-pointer 800px:text-[20px]'
+                    <h5 className='text-[#000] text-[18px] leading-5 font-[600] cursor-pointer lg:text-[20px]'
                         onClick={() => setActive(1)}
                     >
                         Product Details
@@ -175,7 +194,7 @@ const ProductDetailsInfo = ({ data }) => {
                     ) : null}
                 </div>
                 <div className='relative'>
-                    <h5 className='text-[#000] text-[18px] leading-5 font-[600] cursor-pointer 800px:text-[20px]'
+                    <h5 className='text-[#000] text-[18px] leading-5 font-[600] cursor-pointer lg:text-[20px]'
                         onClick={() => setActive(2)}
                     >
                         Product Reviews
@@ -185,7 +204,7 @@ const ProductDetailsInfo = ({ data }) => {
                         </div>
                     ) : null}
                 </div> <div className='relative'>
-                    <h5 className='text-[#000] text-[18px] leading-5 font-[600] cursor-pointer 800px:text-[20px]'
+                    <h5 className='text-[#000] text-[18px] leading-5 font-[600] cursor-pointer lg:text-[20px]'
                         onClick={() => setActive(3)}
                     >
                         Seller Information
@@ -224,30 +243,34 @@ const ProductDetailsInfo = ({ data }) => {
 
             {
                 active === 3 && (
-                    <div className='w-full block 800px:flex p-5'>
-                        <div className='w-full 800px:w-[50%]'>
-                            <div className='flex items-center'>
-                                <img src={data.shop.shop_avatar.url} alt=""
-                                    className='w-[50px] h-[50px] rounded-full'
+                    <div className='w-full block lg:flex p-5'>
+                        <div className='w-full lg:w-[50%]'>
+                           <Link to={`/shop/preview/${data?.shop._id}`} >
+                                 <div className='flex items-center'>
+                                <img 
+                                src={`${backend}${data?.shop?._id}`}
+                                alt=""
+                                className='w-[50px] h-[50px] rounded-full'
                                 />
                                 <div className='pl-3'>
                                     <h3 className={`${styles.shop_name}`}>{data.shop.name}</h3>
                                     <h5 className="pb-2 text-[15px] text-gray-600">
-                                        ({data.shop.ratings}) Ratings
+                                        (4/5) Ratings
                                     </h5>
                                 </div>
                             </div>
+                           </Link>
                             <p className='pt-2'>
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero nobis quas reiciendis libero iusto porro nihil sed molestias distinctio rerum, quisquam dolorem facere ipsam delectus voluptatem consequatur necessitatibus voluptatum sit.
-                                </p>
+                                   { data?.shop?.description } 
+                            </p>
                         </div>
-                        <div className='w-full 800px:w-[50%] mt-5 800px:mt-0 800px:flex flex-col items-end'>
+                        <div className='w-full lg:w-[50%] mt-5 lg:mt-0 lg:flex flex-col items-end'>
                             <div className='text-left'>
                                 <h5 className='font-[600]'>
-                                    Joined on: <span className='font-[500]'> 12 Nov 2025 </span>  
+                                    Joined on: <span className='font-[500]'> { data?.shop.createdAt.slice(0, 10) } </span>  
                                 </h5>
                                 <h5 className='font-[600] pt-3'> 
-                                    Total Products: <span className='font-[500]'> 1,223 </span>  
+                                    Total Products: <span className='font-[500]'> { products?.length } </span>  
                                 </h5>
                                 <h5 className='font-[600] pt-3'> 
                                     Total Rviews: <span className='font-[500]'> 324 </span>  
