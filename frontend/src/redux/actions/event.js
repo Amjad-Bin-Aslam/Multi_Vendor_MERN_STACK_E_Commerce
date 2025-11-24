@@ -92,16 +92,24 @@ export const getAllEvents = () => async (dispatch) => {
 
         const { data } = await axios.get(`${server}/api/event/get-all-events`)
 
-        dispatch({
-            type: "getAllEventsSuccess",
-            payload: data.allEvents
-        })
+        if (data.success && data.allEvents) {
+            dispatch({
+                type: "getAllEventsSuccess",
+                payload: data.allEvents
+            })
+        } else {
+            dispatch({
+                type: "getAllEventsFail",
+                payload: "Failed to fetch events"
+            })
+        }
 
     } catch (error) {
+        console.error("getAllEvents error:", error)
         dispatch({
             type: "getAllEventsFail",
-            payload: error.response.data.messaga || error.message
+            payload: error.response?.data?.message || error.message
         })
     }
 
-}
+} 

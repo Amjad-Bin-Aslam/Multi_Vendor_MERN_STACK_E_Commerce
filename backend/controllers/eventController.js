@@ -105,12 +105,12 @@ const getAllEvents = async (req, res) => {
         return res.json({ success: true, allEvents })
         
     } catch (error) {
-        console.log(error)
+        console.log("getAllEvents error:", error)
         return res.json({ success: false, message: error.message })
     }
 }
 
-
+ 
 
 module.exports = {
     createEvent,

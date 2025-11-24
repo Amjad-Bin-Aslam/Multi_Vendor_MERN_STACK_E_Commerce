@@ -10,6 +10,8 @@ const ProductPage = () => {
 
     const { allProducts } = useSelector((state) => state.product)
 
+    // const { user } = useSelector((state) => state.user)
+
     const [searchParams] = useSearchParams();
     const categoryData = searchParams.get('category')
     const [data, setData] = useState([])
@@ -24,6 +26,9 @@ const ProductPage = () => {
             setData(d)
         }
     },[allProducts, categoryData])
+
+    console.log(allProducts)
+    // console.log(user)
 
     return (
         <div>

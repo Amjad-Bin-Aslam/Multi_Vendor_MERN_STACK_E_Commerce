@@ -1,6 +1,5 @@
 import React from 'react'
 import styles from '../../../styles/styles'
-import { productData } from '../../../static/data'
 import ProductCard from '../ProductCard/ProductCard'
 import { useSelector } from 'react-redux'
 
@@ -9,7 +8,6 @@ const FeaturedProduct = () => {
     const productState = useSelector((state) => state.product || {})
     const { allProducts = [] } = productState
  
-    console.log(allProducts)
 
     return (
         <div className='mt-10'>

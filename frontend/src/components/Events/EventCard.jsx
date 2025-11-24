@@ -4,33 +4,37 @@ import CountDown from './CountDown'
 import { backend } from '../../../server';
 
 const EventCard = ({active,data}) => {
-  console.log(data);
+  
+  if (!data) {
+    return null;
+  }
   
   return (
     <div className={`w-full block bg-white rounded-lg ${active ? "unset" : "mb-12"} lg:flex p-2`}>
        <div className='w-full lg:w-[50%] m-auto'>
           <img 
-          src={`${backend}${data && data.images[0]}`}
-          alt="" />
+          src={`${backend}${data?.images?.[0] || ''}`}
+          alt={data?.name || 'Event'}
+          />
        </div>
        <div className='w-full lg:w-[50%] flex flex-col justify-center'>
           <h2 className={`${styles.productTitle} font-bold`}> 
-            { data.name }
+            {data?.name || 'Event Name'}
           </h2>
           <p>
-            { data.description }
+            {data?.description || ''}
           </p>
           <div className='flex py-2 justify-between'>
             <div className='flex'>
               <h5 className='font-[500] text-[#d55b45] pr-3 line-through'>
-                { data.originalPrice }
+                ${data?.originalPrice || 0}
               </h5>
               <h5 className='font-bold text-[20px] text-[#333] font-Roboto'>
-                { data.discountPrice }
+                ${data?.discountPrice || 0}
               </h5>
             </div>
             <span className='pr-3 font-[400] text-[17px] text-[#44a55e]'>
-                120 sold
+                {data?.sold_out || 0} sold
             </span>
           </div>
           <CountDown data={data} />

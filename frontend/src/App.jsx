@@ -50,7 +50,7 @@ function App() {
     store.dispatch(loadUser()); 
     store.dispatch(loadShop());
     store.dispatch(getAllProducts());
-    store.dispatch(getAllEvents())
+    store.dispatch(getAllEvents()) 
   },[]) 
 
   console.log(isSeller, shop) 
