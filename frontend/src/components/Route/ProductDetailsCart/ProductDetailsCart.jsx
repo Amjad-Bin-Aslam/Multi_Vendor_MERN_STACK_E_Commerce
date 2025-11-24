@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { RxCross1 } from "react-icons/rx";
 import {
   AiFillHeart,
@@ -11,10 +11,12 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { addToCart } from "../../../redux/actions/cart";
+import { addToWishlist, removeFromWishlist } from "../../../redux/actions/wishlist";
 
 const ProductDetailsCart = ({ setOpen, data }) => {
 
-  const {cart} = useSelector((state) => state.cart || {})
+  const { cart } = useSelector((state) => state.cart || {})
+  const { wishlist } = useSelector((state) => state.wishlist || {})
   const { shop } = useSelector((state) => state.seller || {})
 
   const dispatch = useDispatch()
@@ -26,26 +28,45 @@ const ProductDetailsCart = ({ setOpen, data }) => {
     setCount(count + 1)
   }
   const decrementCount = () => {
-    if(count > 1) {
-        setCount(count - 1)
-    } 
+    if (count > 1) {
+      setCount(count - 1)
+    }
+  }
+
+  useEffect(() => {
+    const items = wishlist && Array.isArray(wishlist) ? wishlist : [];
+    if (items.some((i) => i._id === data._id)) {
+      setClick(true)
+    } else {
+      setClick(false)
+    }
+  }, [wishlist, data._id])
+
+  const removeFromWishlistHandler = (data) => {
+    setClick(!click)
+    dispatch(removeFromWishlist(data))
+  }
+
+  const addToWishlistHandler = (data) => {
+    setClick(!click)
+    dispatch(addToWishlist(data))
   }
 
   const addToCartHandler = (id) => {
-    
+
     const isItemExist = Array.isArray(cart) && cart.some((i) => i._id === id);
     if (isItemExist) {
       toast.error("Item already in cart!");
       return;
     }
-    if(data.stock < count){
+    if (data.stock < count) {
       toast.error("Product stock limited!");
       return;
     }
     const cartData = { ...data, qty: count };
     dispatch(addToCart(cartData));
     toast.success("Item added to cart successfully!");
-  } 
+  }
 
   const handleMessageSubmit = () => {
     alert("Message sent to seller!");
@@ -70,7 +91,7 @@ const ProductDetailsCart = ({ setOpen, data }) => {
               {/* Left: Product Image + Seller Info */}
               <div className="flex-1 flex flex-col items-center lg:items-start">
                 <img
-                
+
                   src={data.images[0]}
                   alt={data.name}
                   className="w-full max-w-[400px] rounded-md object-contain"
@@ -79,11 +100,11 @@ const ProductDetailsCart = ({ setOpen, data }) => {
                 {/* Seller Info */}
                 <div className="flex items-center mt-5">
                   <Link to={`/shop/preview/${data?.shop?._id || data?.shopId || shop?._id || ''}`}>
-                  <img
-                    className="w-[50px] h-[50px] rounded-full mr-3"
-                    src={data.shop.avatar}
-                    alt={data.shop.name}
-                  />
+                    <img
+                      className="w-[50px] h-[50px] rounded-full mr-3"
+                      src={data.shop.avatar}
+                      alt={data.shop.name}
+                    />
                   </Link>
                   <div>
                     <h3 className={`${styles.shop_name}`}>{data.shop.name}</h3>
@@ -157,7 +178,7 @@ const ProductDetailsCart = ({ setOpen, data }) => {
                         size={30}
                         className="cursor-pointer"
                         color="red"
-                        onClick={() => setClick(false)}
+                        onClick={() => removeFromWishlistHandler(data)}
                         title="Remove from wishlist"
                       />
                     ) : (
@@ -165,7 +186,7 @@ const ProductDetailsCart = ({ setOpen, data }) => {
                         size={30}
                         className="cursor-pointer"
                         color="#333"
-                        onClick={() => setClick(true)}
+                        onClick={() => addToWishlistHandler(data)}
                         title="Add to wishlist"
                       />
                     )}
