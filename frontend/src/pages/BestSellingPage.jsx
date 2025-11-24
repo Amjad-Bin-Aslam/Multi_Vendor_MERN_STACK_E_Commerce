@@ -4,10 +4,11 @@ import Header from '../components/Layout/Header'
 import ProductCard from '../components/Route/ProductCard/ProductCard'
 import styles from '../styles/styles'
 import { useSelector } from 'react-redux'
+import Loader from '../components/Layout/Loader'
 
 const BestSellingPage = () => {
 
-    const { allProducts } = useSelector((state) => state.product || {})
+    const { allProducts, isLoading } = useSelector((state) => state.product || {})
 
     const [data , setData] = useState([])
 
@@ -16,10 +17,15 @@ const BestSellingPage = () => {
         const d = [...source].sort((a,b) => b.total_sell - a.total_sell)
         setData(d)
 
-    },[])
- 
+    },[allProducts])
+
   return (
-    <div>
+    <>
+      {
+        isLoading ? (
+            <Loader />
+        ) : (
+            <div>
             <Header activeHeading={2} />
             <br />
             <br />
@@ -33,6 +39,9 @@ const BestSellingPage = () => {
             </div>
 
         </div> 
+        )
+      }
+    </>
   )
 }
 

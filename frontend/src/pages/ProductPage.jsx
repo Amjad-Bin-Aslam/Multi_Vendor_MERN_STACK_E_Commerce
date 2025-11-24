@@ -5,10 +5,11 @@ import { useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import ProductCard from '../components/Route/ProductCard/ProductCard'
 import { useSelector } from 'react-redux'
+import Loader from '../components/Layout/Loader'
 
 const ProductPage = () => {
 
-    const { allProducts } = useSelector((state) => state.product)
+    const { allProducts, isLoading } = useSelector((state) => state.product)
 
     // const { user } = useSelector((state) => state.user)
 
@@ -31,7 +32,12 @@ const ProductPage = () => {
     // console.log(user)
 
     return (
-        <div>
+    <>
+        {
+            isLoading ? (
+                <Loader />
+            ) : (
+                <div>
             <Header activeHeading={3} />
             <br />
             <br />
@@ -50,6 +56,9 @@ const ProductPage = () => {
             </div>
 
         </div>
+            )
+        }
+    </>   
     )
 }
 

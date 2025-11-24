@@ -13,7 +13,7 @@ export const addToCart = (data) => async (dispatch,getState) => {
 
 
 
-// remove from cart
+// remove from cart 
 export const removeFromCart = (data) => async (dispatch,getState) => {
     dispatch({
         type: "removeFromCart",

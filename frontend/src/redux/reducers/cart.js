@@ -17,7 +17,7 @@ export const cartReducer =  createReducer(initialState, (builder) => {
             }
         } else {
             return {
-                ...state,
+                ...state, 
                 cart: [...state.cart, item],
             };
         }; 

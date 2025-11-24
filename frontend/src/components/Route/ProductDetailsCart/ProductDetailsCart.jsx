@@ -8,11 +8,16 @@ import {
 } from "react-icons/ai";
 import styles from "../../../styles/styles";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { addToCart } from "../../../redux/actions/cart";
 
 const ProductDetailsCart = ({ setOpen, data }) => {
 
+  const {cart} = useSelector((state) => state.cart || {})
   const { shop } = useSelector((state) => state.seller || {})
+
+  const dispatch = useDispatch()
 
   const [count, setCount] = useState(1);
   const [click, setClick] = useState(false);
@@ -25,6 +30,22 @@ const ProductDetailsCart = ({ setOpen, data }) => {
         setCount(count - 1)
     } 
   }
+
+  const addToCartHandler = (id) => {
+    
+    const isItemExist = Array.isArray(cart) && cart.some((i) => i._id === id);
+    if (isItemExist) {
+      toast.error("Item already in cart!");
+      return;
+    }
+    if(data.stock < count){
+      toast.error("Product stock limited!");
+      return;
+    }
+    const cartData = { ...data, qty: count };
+    dispatch(addToCart(cartData));
+    toast.success("Item added to cart successfully!");
+  } 
 
   const handleMessageSubmit = () => {
     alert("Message sent to seller!");
@@ -153,7 +174,7 @@ const ProductDetailsCart = ({ setOpen, data }) => {
 
                 {/* Add to Cart */}
                 <button
-                  onClick={() => alert("Added to cart!")}
+                  onClick={() => addToCartHandler(data._id)}
                   className={`${styles.button} w-full sm:w-auto flex items-center justify-center gap-2 rounded-md h-11 px-3`}
                 >
                   <span className="text-white flex items-center">
