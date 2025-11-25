@@ -41,7 +41,7 @@ const createUser = async (req, res) => {
         } 
 
         const filename = req.file.filename
-        const fileUrl = path.join("uploads", filename)
+        const fileUrl = `uploads/${filename}`
 
         const user = {
             name: name,

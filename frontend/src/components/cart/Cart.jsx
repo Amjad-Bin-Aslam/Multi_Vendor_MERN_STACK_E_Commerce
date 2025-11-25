@@ -136,7 +136,7 @@ const CartSingle = ({data,quantityChangeHandler,removeFromCartHandler}) => {
                 </div>
                 <img 
                 className='w-[80px] h-[80px] ml-2' 
-                src={`${backend}${data?.images[0]}`} 
+                src={`${backend}/uploads/${data?.images[0]}`} 
                 alt="" 
                 />
                 <div className='pl-[5px]'>

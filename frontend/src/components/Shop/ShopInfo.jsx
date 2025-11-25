@@ -50,14 +50,14 @@ const ShopInfo = ({ isOwner }) => {
     return (
         <>
         {
-            isLoading ? (
+            isLoading ? ( 
                 <Loader />
             ) : (
                 <div>
             <div className='w-full py-5'>
                 <div className='w-full flex items-center justify-center'>
                     <img
-                        src={`${backend}/${data?.avatar}`}
+                        src={`${backend}/uploads/${data?.avatar}`}
                         className='w-[150px] h-[150px] rounded-full border'
                         alt="" />
                 </div>

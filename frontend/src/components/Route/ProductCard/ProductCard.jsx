@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import styles from '../../../styles/styles'
+import { backend } from '../../../../server'
 import { AiFillHeart, AiFillStar, AiOutlineEye, AiOutlineHeart, AiOutlineShoppingCart, AiOutlineStar } from 'react-icons/ai'
 import ProductDetailsCart from '../ProductDetailsCart/ProductDetailsCart'
 import { addToWishlist, removeFromWishlist } from '../../../redux/actions/wishlist'
@@ -16,9 +17,6 @@ const ProductCard = ({ data }) => {
   const [click, setClick] = useState(false)
   const [open, setOpen] = useState(false)
   const dispatch = useDispatch()
-
-  const d = data?.name || ''
-  const product_name = d.replace(/\s+/g, "-");
 
   useEffect(() => {
     const items = wishlist && Array.isArray(wishlist) ? wishlist : [];
@@ -62,17 +60,17 @@ const ProductCard = ({ data }) => {
 
         <div className='flex justify-end'>
         </div>
-        <Link to={`/product/${product_name}`}>
+        <Link to={`/product/${data._id}`}>
           <img
             className='w-full h-[170px] object-contain'
-            src={data?.image_Url?.[0]?.url || '/fallback-product.png'}
+            src={data?.images?.[0] ? `${backend}/uploads/${data.images[0]}` : '/fallback-product.png'}
             alt={data?.name || 'product'}
           />
         </Link>
-        <Link to="/">
+        <Link to={`/shop/preview/${data?.shop?._id}`}>
           <h5 className={`${styles.shop_name}`}> {data?.shop?.name || 'Shop'} </h5>
         </Link>
-        <Link to={`/product/${product_name}`}>
+        <Link to={`/product/${data._id}`}>
           <h4 className='pb-3 font-[500]'>
             {data.name.length > 40 ? data.name.slice(0, 40) + "..." : data.name}
           </h4>

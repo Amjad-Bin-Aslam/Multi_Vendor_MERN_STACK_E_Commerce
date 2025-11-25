@@ -11,16 +11,15 @@ const ProductDetailsPage = () => {
   const productState = useSelector((state) => state.product || {})
   const { allProducts  } = productState
 
-  const { name } = useParams()
+  const { id } = useParams()
   const [data , setData] = useState(null)
-  const productName = name.replace(/-/g, " ")
 
   useEffect(()=>{
     if (Array.isArray(allProducts) && allProducts.length > 0) {
-      const found = allProducts.find((item) => item.name === productName)
+      const found = allProducts.find((item) => item._id === id)
       setData(found)
     } 
-  },[allProducts, productName])
+  },[allProducts, id]) 
 
   
 

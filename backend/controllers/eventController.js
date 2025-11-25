@@ -14,8 +14,9 @@ const createEvent = async (req , res) => {
         if(!shop){
             return res.json({ success: false, message: "Shop ID is in invalid!" })
         } else {
-            const files = req.files;
-            const imageUrls = files.map((file) => `${file.fileName}` || file.originalName )
+            const files = Array.isArray(req.files) ? req.files : [];
+            
+            const imageUrls = files.map((file) => file.filename)
             const eventData = req.body
             eventData.images = imageUrls
             eventData.shop = shop;

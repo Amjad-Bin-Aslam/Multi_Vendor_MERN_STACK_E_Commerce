@@ -96,7 +96,7 @@ const CartSingle = ({ data,removeFromWishlistHandler,addToCartHandler }) => {
                 />
                 <img 
                 className='w-[80px] h-[80px] ml-2' 
-                src={`${backend}${data?.images[0]}`} alt="" />
+                src={`${backend}/uploads/${data?.images[0]}`} alt="" />
 
                 <div className='pl-[5px]'>
                     <h1> {data.name} </h1>

@@ -13,7 +13,7 @@ const EventCard = ({active,data}) => {
     <div className={`w-full block bg-white rounded-lg ${active ? "unset" : "mb-12"} lg:flex p-2`}>
        <div className='w-full lg:w-[50%] m-auto'>
           <img 
-          src={`${backend}${data?.images?.[0] || ''}`}
+          src={`${backend}/uploads/${data?.images?.[0] || ''}`}
           alt={data?.name || 'Event'}
           />
        </div>

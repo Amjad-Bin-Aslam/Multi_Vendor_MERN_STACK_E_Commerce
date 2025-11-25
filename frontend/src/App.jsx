@@ -79,7 +79,7 @@ function App() {
       <Route path='/sign-up' element = {<SignupPage/>} />
       <Route path='/seller/activation/:activation_token' element = {<SellerActivationPage/>} />
       <Route path='/products' element ={ <ProductPage /> } />
-      <Route path='/product/:name' element ={ <ProductDetailsPage /> } />
+      <Route path='/product/:id' element ={ <ProductDetailsPage /> } />
       <Route path='/best-selling' element ={ <BestSellingPage /> } />
       <Route path='/events' element = {<EventsPage />} />
       <Route path='/faq' element = {<FAQPage />} /> 

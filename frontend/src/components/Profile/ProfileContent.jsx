@@ -36,7 +36,7 @@ const ProfileContent = ({active}) => {
                 <div className="relative">
                    <img
                     className='w-[120px] h-[120px] md:w-[150px] md:h-[150px] object-cover rounded-full border-[3px] border-[#3ad123]'
-                    src={`${backend}${user?.avatar}`}
+                    src={user?.avatar?.url ? `${backend}/${user.avatar.url}` : 'https://via.placeholder.com/60'}
                     alt="user"
                     />   
                     <div className='w-[30px] h-[30px] bg-[#E3E9EE] rounded-full flex items-center justify-center cursor-pointer absolute bottom-[5px] right-[5px]'>
@@ -182,7 +182,7 @@ const ProfileContent = ({active}) => {
   )
 }
 
-
+ 
 const AllOrders = () => {
 
   const orders = [

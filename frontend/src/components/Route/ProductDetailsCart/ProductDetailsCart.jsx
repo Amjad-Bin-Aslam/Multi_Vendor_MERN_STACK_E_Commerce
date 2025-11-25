@@ -8,6 +8,7 @@ import {
 } from "react-icons/ai";
 import styles from "../../../styles/styles";
 import { Link } from "react-router-dom";
+import { backend } from "../../../../server";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { addToCart } from "../../../redux/actions/cart";
@@ -91,8 +92,7 @@ const ProductDetailsCart = ({ setOpen, data }) => {
               {/* Left: Product Image + Seller Info */}
               <div className="flex-1 flex flex-col items-center lg:items-start">
                 <img
-
-                  src={data.images[0]}
+                  src={`${backend}/uploads/${data.images[0]}`}
                   alt={data.name}
                   className="w-full max-w-[400px] rounded-md object-contain"
                 />
@@ -102,7 +102,7 @@ const ProductDetailsCart = ({ setOpen, data }) => {
                   <Link to={`/shop/preview/${data?.shop?._id || data?.shopId || shop?._id || ''}`}>
                     <img
                       className="w-[50px] h-[50px] rounded-full mr-3"
-                      src={data.shop.avatar}
+                      src={`${backend}/uploads/${data.shop.avatar}`}
                       alt={data.shop.name}
                     />
                   </Link>
