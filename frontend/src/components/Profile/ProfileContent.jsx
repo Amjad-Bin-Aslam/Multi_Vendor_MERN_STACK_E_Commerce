@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
-import { backend } from '../../../server'
-import { useSelector } from 'react-redux'
+import React, { useEffect, useState } from 'react'
+import { backend, server } from '../../../server'
+import { useDispatch, useSelector } from 'react-redux'
 import { AiOutlineArrowRight, AiOutlineCamera, AiOutlineDelete } from 'react-icons/ai';
 import styles from '../../styles/styles';
 import { Link } from 'react-router-dom';
@@ -8,19 +8,50 @@ import 'react-data-grid/lib/styles.css';
 import { DataGrid } from '@mui/x-data-grid';
 import Button from '@mui/material/Button';
 import { MdOutlineTrackChanges } from 'react-icons/md';
+import { updateUserInformation, loadUser } from '../../redux/actions/user';
+import { toast } from 'react-toastify';
+import axios from 'axios';
 
 
 const ProfileContent = ({active}) => {
 
-    const {user} = useSelector((state) => state.user);
+    const {user, success} = useSelector((state) => state.user);
+    const [avatar, setAvatar] = useState(null)
+
+    const dispatch = useDispatch();
     
     const [name , setName] = useState(user && user.name)
     const [email , setEmail] = useState( user && user.email )
-    const [phoneNumber , setPhoneNumber] = useState(null)
+    const [phoneNumber , setPhoneNumber] = useState(user && user.phoneNumber)
     const [password , setPassword] = useState("") 
+
+    useEffect(() => {
+      if(success){
+        toast.success("User Information Updated Successfully!")
+      }
+    }, [success])
 
     const handleSubmit = (e) =>{
         e.preventDefault()
+        dispatch(updateUserInformation(name,email,phoneNumber,password))
+    }
+
+    const handleImage = async (e) => {
+        const file =  e.target.files[0]
+        setAvatar(file)
+
+        const formData = new FormData()
+
+        formData.append('file', e.target.files[0])
+
+        await axios.put(`${server}/api/user/update-user-avatar`, formData, {
+          headers: {"Content-Type" : "multipart/form-data" } , withCredentials: true
+        }).then((res) => {
+          dispatch(loadUser());
+          toast.success("Avatar Updated Successfully!")
+        }).catch((err) => {
+          toast.error(err)
+        })
     }
  
   return (
@@ -38,7 +69,15 @@ const ProfileContent = ({active}) => {
                     alt="user"
                     />   
                     <div className='w-[30px] h-[30px] bg-[#E3E9EE] rounded-full flex items-center justify-center cursor-pointer absolute bottom-[5px] right-[5px]'>
+                      <input 
+                      type="file"
+                      id='image'
+                      className='hidden'
+                      onChange={handleImage}
+                      />
+                      <label htmlFor="image">
                         <AiOutlineCamera />
+                      </label>
                     </div>
                 </div> 
             </div>

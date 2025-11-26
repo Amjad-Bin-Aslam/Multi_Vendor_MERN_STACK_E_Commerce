@@ -200,6 +200,89 @@ const logoutUser = async (req , res) => {
 
 
 
+// update User Information
+const updateUserInformation = async (req,res) => {
+
+    try {
+
+        const { email, password, phoneNumber, name } = req.body;
+
+        const user =  await userModel.findOne({email}).select("+password")
+        if(!user){
+            return res.json({ success: false, message: "User does not exist!" })
+        }
+
+        const isPasswordValid = await user.comparePassword(password)
+        if(!isPasswordValid){
+            return res.json({ success: false, message: "Please provide correct information!" })
+        }
+
+        user.name = name || user.name
+        user.phoneNumber = phoneNumber || user.phoneNumber
+        user.email = email || user.email 
+
+        await user.save()
+
+        return res.status(200).json({
+            success: true,
+            message: "User information updated successfully.",
+            user
+        })
+        
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({ success: false, message: error.message })
+    }
+
+}
+
+
+// update user avatar
+const updateUserAvatar = async (req,res) => {
+    try {
+        
+        if (!req.file) {
+            return res.status(400).json({ success: false, message: "No file uploaded." });
+        }
+
+        const userId = req.user.id; 
+        const existingUser = await userModel.findById(userId);
+        if (!existingUser) {
+            return res.status(404).json({ success: false, message: "User not found." });
+        } 
+
+        try {
+            if (existingUser.avatar && existingUser.avatar.public_id) {
+                const previousPath = `uploads/${existingUser.avatar.public_id}`;
+                if (fs.existsSync(previousPath)) {
+                    fs.unlinkSync(previousPath);
+                }
+            }
+        } catch (cleanupErr) {
+            console.log("Avatar cleanup error:", cleanupErr);
+        }
+
+        const filename = req.file.filename;
+        const fileUrl = `uploads/${filename}`;
+
+        existingUser.avatar = {
+            public_id: filename,
+            url: fileUrl
+        };
+        await existingUser.save();
+
+        return res.status(200).json({
+            success: true,
+            message: "Avatar updated successfully.",
+            user: existingUser
+        });
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ success: false, message: error.message });
+    }
+}
+
+
 // creating the token
 const createActivationToken = (user) => {
     return jwt.sign(user, process.env.ACTIVATION_SECRET, {
@@ -215,4 +298,6 @@ module.exports = {
     loginUser,
     loadUser,
     logoutUser,
+    updateUserInformation,
+    updateUserAvatar,
 }
