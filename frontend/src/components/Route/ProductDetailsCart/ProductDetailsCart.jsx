@@ -141,11 +141,11 @@ const ProductDetailsCart = ({ setOpen, data }) => {
                 {/* Price Section */}
                 <div className="flex items-center gap-3 mb-4">
                   <h4 className={`${styles.productDiscountPrice} text-[20px]`}>
-                    ${data.discount_price}
+                    ${data.discountPrice}
                   </h4>
-                  {data.price && (
+                  {data.originalPrice && (
                     <h3 className={`${styles.price} line-through text-gray-500`}>
-                      ${data.price}
+                      ${data.originalPrice}
                     </h3>
                   )}
                 </div>

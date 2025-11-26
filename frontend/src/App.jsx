@@ -41,9 +41,8 @@ import { getAllEvents } from './redux/actions/event';
 
 function App() {
 
-  const navigate = useNavigate();
 
-  const { loading, isAuthenticated } = useSelector((state) => state.user)
+  const { loading, isAuthenticated, user } = useSelector((state) => state.user)
   const { isSeller, shop } = useSelector((state) => state.seller)
 
   useEffect(() => {
@@ -54,6 +53,8 @@ function App() {
   },[]) 
 
   console.log(isSeller, shop) 
+  console.log(user)
+
  
   return ( 
     

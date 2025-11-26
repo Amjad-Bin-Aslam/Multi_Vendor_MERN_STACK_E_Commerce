@@ -17,9 +17,7 @@ const ProfileContent = ({active}) => {
     const [name , setName] = useState(user && user.name)
     const [email , setEmail] = useState( user && user.email )
     const [phoneNumber , setPhoneNumber] = useState(null)
-    const [zipCode , setZipCode] = useState()
-    const [address1 , setAddress1] = useState("")
-    const [address2 , setAddress2] = useState("")
+    const [password , setPassword] = useState("") 
 
     const handleSubmit = (e) =>{
         e.preventDefault()
@@ -44,7 +42,7 @@ const ProfileContent = ({active}) => {
                     </div>
                 </div> 
             </div>
-            <br />
+            <br /> 
             <br /> 
             <div className='w-full px-4 md:px-5'>
                     <form onSubmit={handleSubmit} aria-required={true}>
@@ -63,7 +61,7 @@ const ProfileContent = ({active}) => {
                          </div>
                          <div className='w-full sm:w-[50%]'>
                             <label className='block pb-2 text-sm md:text-base'>
-                                Email
+                                Email Address
                             </label>
                             <input type="email" className={`${styles.input} bg-white !w-full`} 
                             required
@@ -87,39 +85,16 @@ const ProfileContent = ({active}) => {
                          </div>
                          <div className='w-full sm:w-[50%]'>
                             <label className='block pb-2 text-sm md:text-base'>
-                                Zip Code
+                                Enter your password
                             </label>
-                            <input type="number" className={`${styles.input} bg-white !w-full`} 
+                            <input type="password" className={`${styles.input} bg-white !w-full`} 
                             required
-                            value={zipCode}
-                            onChange={(e)=>setZipCode(e.target.value)}
+                            value={password}
+                            onChange={(e)=>setPassword(e.target.value)}
                             />
                          </div>
                        </div>
 
-                       {/* Address */}
-                       <div className='w-full flex flex-col sm:flex-row gap-4 pb-3'>
-                         <div className='w-full sm:w-[50%]'>
-                            <label className='block pb-2 text-sm md:text-base'>
-                                Address 1
-                            </label>
-                            <input type="address" className={`${styles.input} bg-white !w-full`} 
-                            required
-                            value={address1}
-                            onChange={(e)=>setAddress1(e.target.value)}
-                            />
-                         </div>
-                         <div className='w-full sm:w-[50%]'>
-                            <label className='block pb-2 text-sm md:text-base'>
-                                Address 2
-                            </label>
-                            <input type="address" className={`${styles.input} bg-white !w-full`} 
-                            required
-                            value={address2}
-                            onChange={(e)=>setAddress2(e.target.value)}
-                            />
-                         </div>
-                       </div> 
 
                        <input 
                        type="submit" 

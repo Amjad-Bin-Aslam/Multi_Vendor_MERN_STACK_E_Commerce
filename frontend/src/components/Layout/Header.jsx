@@ -81,7 +81,7 @@ const Header = ({ activeHeading }) => {
                         <Link to={`/product/${item._id}`}>
                           <div className='w-full flex items-start-py-2'>
                             <img
-                              src={`${backend}${item.images[0]}`} alt=""
+                              src={`${backend}/uploads/${item.images[0]}`} alt=""
                               className='w-[40px] h-[40px] mr-[10px]'
                             />
                             <h1> {item.name} </h1>
@@ -177,7 +177,7 @@ const Header = ({ activeHeading }) => {
                   <Link to={"/profile"}>
                     <img
                       className='w-[35px] h-[35px] object-cover rounded-full'
-                      src={user && user.avatar ? (user.avatar.url ? `${backend}/${user.avatar.url}` : 'https://via.placeholder.com/35') : 'https://via.placeholder.com/35'}
+                      src={`${backend}/${user.avatar.url}`} 
                       alt=""
                     />
 
@@ -327,7 +327,7 @@ const Header = ({ activeHeading }) => {
                         <Link to={"/profile"}>
                           <img
                             className='w-[45px] h-[45px] object-cover rounded-full border-[3px] border-[#44db39]'
-                            src={user && user.avatar ? (user.avatar.url ? `${backend}/${user.avatar.url}` : 'https://via.placeholder.com/45') : 'https://via.placeholder.com/45'}
+                            src={`${backend}/${user.avatar.url}`}
                             alt=""
                           />
                         </Link>

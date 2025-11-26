@@ -24,6 +24,9 @@ const ProductDetails = ({ data }) => {
     const dispatch = useDispatch()
 
     useEffect(() => {
+
+        if(!data) return;
+
         if (shop && data) {
             dispatch(getAllProdcutsShop(data && data.shop._id))
         }
@@ -293,10 +296,10 @@ const ProductDetailsInfo = ({ data, products }) => {
                             <Link to={`/shop/preview/${data?.shop._id}`} >
                                 <div className='flex items-center'>
                                     <img
-                                        src={`${backend}${data?.shop?._id}`}
+                                        src={`${backend}/uploads/${data?.shop?.avatar}`}
                                         alt=""
-                                        className='w-[50px] h-[50px] rounded-full'
-                                    />
+                                        className='w-[50px] h-[50px] rounded-full border mr-2'
+                                    /> 
                                     <div className='pl-3'>
                                         <h3 className={`${styles.shop_name}`}>{data.shop.name}</h3>
                                         <h5 className="pb-2 text-[15px] text-gray-600">

@@ -36,7 +36,7 @@ const createShop = async (req, res) => {
 
 
         const filename = req.file.filename
-        const fileUrl = path.join(filename)
+        const fileUrl = `uploads/${filename}`
 
         const seller = {
             name: req.body.name,
