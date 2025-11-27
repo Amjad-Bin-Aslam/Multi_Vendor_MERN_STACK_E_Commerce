@@ -177,7 +177,7 @@ const Header = ({ activeHeading }) => {
                   <Link to={"/profile"}>
                     <img
                       className='w-[35px] h-[35px] object-cover rounded-full'
-                      src={`${backend}/${user.avatar.url}`} 
+                      src={user?.avatar?.url ? `${backend}/${user.avatar.url}` : 'https://via.placeholder.com/35'} 
                       alt=""
                     />
 
@@ -327,7 +327,7 @@ const Header = ({ activeHeading }) => {
                         <Link to={"/profile"}>
                           <img
                             className='w-[45px] h-[45px] object-cover rounded-full border-[3px] border-[#44db39]'
-                            src={`${backend}/${user.avatar.url}`}
+                            src={user?.avatar?.url ? `${backend}/${user.avatar.url}` : 'https://via.placeholder.com/45'}
                             alt=""
                           />
                         </Link>

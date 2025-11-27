@@ -2,6 +2,7 @@ import { createReducer } from "@reduxjs/toolkit";
 
 const initialState = {
   isAuthenticated: false,
+  loading: true,
 };
 
 export const userReducer = createReducer(initialState, (builder) => {
@@ -40,8 +41,25 @@ export const userReducer = createReducer(initialState, (builder) => {
       state.loading = false;
       state.error = action.payload
     })
+    // update user address
+    .addCase("updateUserAddressRequest", (state) => {
+      state.addressLoading = true;
+    })
+    .addCase("updateUserAddressSuccess", (state, action) => {
+      state.addressLoading = false;
+      state.user = action.payload;
+      state.successMessage = "Address added successfully!";
+    })
+    .addCase("updateUserAddressFail", (state, action) => {
+      state.addressLoading = false;
+      state.error = action.payload;
+    })
     .addCase("clearError", (state) => {
       state.error = null;
+    })
+    .addCase("clearMessages", (state) => {
+      state.error = null;
+      state.successMessage = null;
     });
 });
 

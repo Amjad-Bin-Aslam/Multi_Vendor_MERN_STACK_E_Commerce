@@ -1,6 +1,6 @@
 const express = require('express')
 const { upload } = require('../middlewares/multer');
-const { createUser, activateUser, loginUser, loadUser, logoutUser, updateUserInformation, updateUserAvatar } = require('../controllers/userController');
+const { createUser, activateUser, loginUser, loadUser, logoutUser, updateUserInformation, updateUserAvatar, updateUserAddress } = require('../controllers/userController');
 const {isAuthenticated} = require('../middlewares/auth');
 
 
@@ -17,6 +17,6 @@ userRouter.post('/logout-user', isAuthenticated, logoutUser)
 userRouter.get('/load-user', isAuthenticated, loadUser)
 userRouter.put('/update-user-info', isAuthenticated, updateUserInformation)
 userRouter.put('/update-user-avatar', upload.single('file'), isAuthenticated, updateUserAvatar)
-
+userRouter.put('/update-user-address', isAuthenticated, updateUserAddress)
 
 module.exports = userRouter; 

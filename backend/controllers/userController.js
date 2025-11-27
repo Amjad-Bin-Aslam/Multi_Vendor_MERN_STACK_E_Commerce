@@ -283,6 +283,39 @@ const updateUserAvatar = async (req,res) => {
 }
 
 
+// update user address
+const updateUserAddress =  async (req, res) => {
+
+    try {
+
+        const userId =  req.user.id;
+
+        const user = await userModel.findById(userId)
+
+        const sameTypeAddress =  user.addresses.find((address) => address.addressType === req.body.addressType)
+        if(sameTypeAddress){
+            return res.json({ success: false, message: `${req.body.addressType} address already exists.` })
+        }
+
+        const exitAddress = user.addresses.find((address) => address._id = req.body._id)
+        if(exitAddress){
+            Object.assign(exitAddress, req.body)
+        } else {
+            user.addresses.push(req.body)
+        }
+
+        await user.save()
+
+        return res.json({ success: true, message: "Address added successfully.", user })
+        
+    } catch (error) {
+        console.log(error)
+        return res.json({ success: false, message: error.message })
+    }
+
+}
+
+
 // creating the token
 const createActivationToken = (user) => {
     return jwt.sign(user, process.env.ACTIVATION_SECRET, {
@@ -300,4 +333,5 @@ module.exports = {
     logoutUser,
     updateUserInformation,
     updateUserAvatar,
+    updateUserAddress,
 }
