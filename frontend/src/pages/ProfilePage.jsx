@@ -7,17 +7,25 @@ import ProfileContent from '../components/Profile/ProfileContent'
 
 const ProfilePage = () => {
 
-  const [active , setActive] = useState(1)
+  const [active , setActive] = useState(() => {
+    const saved = localStorage.getItem('profileActive');
+    return saved ? Number(saved) : 1;
+  })
+
+  const setActivePersist = (val) => {
+    setActive(val);
+    localStorage.setItem('profileActive', String(val));
+  }
 
   return (
     <div>
       <Header />
       <div className={`${styles.section} flex flex-col md:flex-row gap-4 md:gap-6 bg-[#f5f5f5] py-8 md:py-10 px-4 md:px-0`}>
         <div className='w-full md:w-[335px]'>
-            <ProfileSideBar active={active} setActive={setActive}  />
+            <ProfileSideBar active={active} setActive={setActivePersist}  />
         </div> 
         <div className='w-full md:flex-1'>
-          <ProfileContent active ={active} />
+          <ProfileContent active ={active} setActive={setActivePersist} />
         </div>
       </div>
     </div>

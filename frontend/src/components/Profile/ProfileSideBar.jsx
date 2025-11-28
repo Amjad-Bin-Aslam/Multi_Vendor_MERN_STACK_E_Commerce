@@ -1,7 +1,7 @@
 import React from 'react'
 import { AiOutlineCreditCard, AiOutlineLogout } from 'react-icons/ai';
 import { HiOutlineReceiptRefund, HiOutlineShoppingBag } from 'react-icons/hi'
-import { MdOutlineMessage, MdOutlineTrackChanges } from "react-icons/md";
+import { MdOutlineLock, MdOutlineMessage, MdOutlineTrackChanges } from "react-icons/md";
 import { FaAddressBook } from "react-icons/fa";
 import { RxPerson } from 'react-icons/rx'
 import { useNavigate } from 'react-router-dom'
@@ -78,9 +78,9 @@ const ProfileSideBar = ({setActive,active}) => {
       <div className='flex items-center cursor-pointer w-full mb-4 md:mb-8 px-2 md:px-0'
       onClick={() => setActive(6) }
       >
-        <AiOutlineCreditCard size={18} md:size={20} color={active === 6 ? 'red' : null} />
+        <MdOutlineLock size={18} md:size={20} color={active === 6 ? 'red' : null} />
         <span className={`pl-2 md:pl-3 text-sm md:text-base ${active === 6 ? 'text-[red]' : null}`}>
-          Payment Methods
+          Change Password
         </span>
       </div>
       {/* Address */}

@@ -66,7 +66,6 @@ export const loadShop =  () => async (dispatch) => {
 
 
 // update user Information
-
 export const updateUserInformation = (name,email,phoneNumber,password) => async (dispatch) => {
     
     try {
@@ -101,7 +100,7 @@ export const updateUserInformation = (name,email,phoneNumber,password) => async 
 
 
 // update user address
-export const updateUserAddress = (country,state,city,address1,address2,addressType) => async (dispatch) => {
+export const updateUserAddress = (country,state,city,address1,address2,zipCode,addressType) => async (dispatch) => {
 
     try {
 
@@ -115,6 +114,7 @@ export const updateUserAddress = (country,state,city,address1,address2,addressTy
             city,
             address1,
             address2,
+            zipCode,
             addressType
         }, { withCredentials: true })
 
@@ -126,7 +126,10 @@ export const updateUserAddress = (country,state,city,address1,address2,addressTy
         } else {
             dispatch({
                 type: "updateUserAddressSuccess",
-                payload: data.user
+                payload: {
+                    successMessage: "Address updated successfully!",
+                    user: data.user
+                }
             })
         }
         
@@ -137,5 +140,35 @@ export const updateUserAddress = (country,state,city,address1,address2,addressTy
             payload: error.response?.data?.message || error.message
         })
     }
+
+}
+
+
+
+// delete user address
+export const deleteUserAddress = (id) => async (dispatch) => {
+
+   try {
+
+     dispatch({
+        type: "deleteUserAddressRequest"
+    })
+    
+    const { data } = await axios.delete(`${server}/api/user/delete-user-address/${id}`, { withCredentials: true })
+
+    dispatch({
+        type: "deleteUserAddressSuccess",
+        payload: {
+            successMessage: "Address deleted successfully!",
+            user: data.user
+        }
+    })
+
+   } catch (error) {
+    dispatch({
+        type: "deleteUserAddressFail",
+        payload: error.response?.data?.message || error.message
+    })
+   }
 
 }

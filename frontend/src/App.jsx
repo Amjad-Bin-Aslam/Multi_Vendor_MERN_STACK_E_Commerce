@@ -37,6 +37,7 @@ import ProtectedRoute from './ProtectedRoutes/ProtectedRoute';
 import SellerProtectedRoute from './ProtectedRoutes/SellerProtectedRoute';
 import { getAllProducts } from './redux/actions/product';
 import { getAllEvents } from './redux/actions/event';
+import CheckoutPage from './pages/CheckoutPage';
 
 
 function App() {
@@ -84,6 +85,11 @@ function App() {
       <Route path='/best-selling' element ={ <BestSellingPage /> } />
       <Route path='/events' element = {<EventsPage />} />
       <Route path='/faq' element = {<FAQPage />} /> 
+      <Route path='/checkout' element = {
+        <ProtectedRoute isAuthenticated={isAuthenticated} loading={loading} >
+        <CheckoutPage />
+        </ProtectedRoute>
+      } />
       <Route path='/profile' element = { 
         <ProtectedRoute isAuthenticated={isAuthenticated} loading={loading} >
           <ProfilePage />

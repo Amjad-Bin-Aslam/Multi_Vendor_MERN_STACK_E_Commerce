@@ -8,7 +8,7 @@ import 'react-data-grid/lib/styles.css';
 import { DataGrid } from '@mui/x-data-grid';
 import Button from '@mui/material/Button';
 import { MdOutlineTrackChanges } from 'react-icons/md';
-import { updateUserInformation, loadUser, updateUserAddress } from '../../redux/actions/user';
+import { updateUserInformation, loadUser, updateUserAddress, deleteUserAddress } from '../../redux/actions/user';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import { RxCross1 } from 'react-icons/rx';
@@ -17,9 +17,9 @@ import { City, Country, State } from 'country-state-city';
 
 const ProfileContent = ({active}) => {
 
-    const {user, success, error} = useSelector((state) => state.user);
+    const {user, error} = useSelector((state) => state.user);
     const [avatar, setAvatar] = useState(null)
-
+ 
     const dispatch = useDispatch();
     
     const [name , setName] = useState(user && user.name)
@@ -28,16 +28,13 @@ const ProfileContent = ({active}) => {
     const [password , setPassword] = useState("") 
 
     useEffect(() => {
-      if(success){
-        toast.success("User Information Updated Successfully!")
-      }
       if(error){
         toast.error(error)
         dispatch({
           type: "clearError"
         })
       }
-    }, [success])
+    }, [error])
 
     const handleSubmit = (e) =>{
         e.preventDefault()
@@ -186,7 +183,7 @@ const ProfileContent = ({active}) => {
       {
         active === 6 && (
             <div>
-                <PaymentMethod />
+                <ChangePassword />
             </div>
         )
       }
@@ -475,36 +472,82 @@ const TrackOrder = () => {
 }
 
 
-const PaymentMethod = () => {
+const ChangePassword = () => {
+
+  const [oldPassword, setOldPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const passwordChangeHandler = async (e) => {
+    e.preventDefault()
+
+    await axios.put(`${server}/api/user/change-user-password`,{oldPassword,newPassword,confirmPassword}, {withCredentials: true} ).then((res) => {
+      if (res.data.success === false) {
+        toast.error(res.data.message)
+      } else {
+        toast.success(res.data.message)
+        setNewPassword('')
+        setOldPassword('')
+        setConfirmPassword('')
+      }
+      console.log(res.data)
+    }).catch((err) => {
+      toast.error(err.response?.data?.message || err.message)
+      console.log(err)      
+    })
+
+  }
+
     return (
         <div className='w-full px-4 md:px-5'>
-            <div className='w-full flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4'>
-                <h1 className='text-[20px] md:text-[25px] font-[600] text-[#000000ba] pb-2'>
-                    Payment Methods
+            
+                <h1 className='block text-center text-[20px] md:text-[25px] f font-[600] text-[#000000ba] pb-2'>
+                    Change Password
                 </h1>
-                <div className={`${styles.button} rounded-md`}>
-                    <span className='text-[#fff]'>Add New</span>
+
+                <div className='w-full'>
+                   <form aria-required action="" onSubmit={passwordChangeHandler} className='flex flex-col items-center' >
+                      <div className='w-full mt-5 sm:w-[70%]'>
+                        <label className='block pb-2 text-sm md:text-base'>
+                          Enter old password
+                        </label>
+                        <input type="password" className={`${styles.input} bg-white !w-full`} 
+                            required
+                            value={oldPassword}
+                            onChange={(e)=>setOldPassword(e.target.value)}
+                            />
+                      </div>
+                      <div className='w-full mt-2 sm:w-[70%]'>
+                        <label className='block pb-2 text-sm md:text-base'>
+                          Enter new password
+                        </label>
+                        <input type="password" className={`${styles.input} bg-white !w-full`} 
+                        required
+                        value={newPassword}
+                        onChange={(e)=>setNewPassword(e.target.value)}
+                            />
+                      </div>
+                      <div className='w-full mt-5 sm:w-[70%]'>
+                        <label className='block pb-2 text-sm md:text-base'>
+                          Enter confirm password
+                        </label>
+                        <input type="password" className={`${styles.input} bg-white !w-full`} 
+                        required
+                        value={confirmPassword}
+                        onChange={(e)=>setConfirmPassword(e.target.value)}
+                        />
+                      </div>
+
+
+                      <input 
+                       type="submit" 
+                       value="Update"
+                       className={`w-full sm:w-[250px] h-[40px] border border-[#3a24db] text-center text-[#3a24db] rounded-[3px] mt-8 cursor-pointer`}
+                       />
+
+                   </form>
                 </div>
-            </div>
-            <br />
-            <div className='w-full bg-white h-auto md:h-[70px] rounded-[4px] flex flex-col sm:flex-row items-start sm:items-center px-3 shadow justify-between pr-4 md:pr-10 gap-4 py-3 md:py-0'>
-                <div className="flex items-center gap-2">
-                    <img 
-                    src="https://bonik-react.vercel.app/assets/images/payment-methods/Visa.svg" 
-                    alt="" 
-                    />
-                    <h5 className='font-[600] text-sm md:text-base'>Amjad Aslam</h5>
-                </div>
-                <div className='pl-0 md:pl-8 flex flex-col sm:flex-row items-start sm:items-center gap-2 md:gap-0'>
-                    <h6 className='text-sm md:text-base'> 123456**** </h6>
-                    <h5 className='pl-0 md:pl-6 text-sm md:text-base'> 08/08/2028 </h5>
-                </div>
-                <div>
-                    <div className="flex items-center justify-between pl-0 md:pl-8">
-                        <AiOutlineDelete size={20} className='cursor-pointer' />
-                    </div>
-                </div>
-            </div>
+               
         </div>
     )
 }
@@ -512,7 +555,7 @@ const PaymentMethod = () => {
 
 const Address = () => {
 
-  const {error, successMessage} = useSelector((state) => state.user);
+  const {error, successMessage,user} = useSelector((state) => state.user);
 
   const [open,setOpen] = useState(false)
   const [country,setCountry] = useState("")
@@ -563,8 +606,14 @@ const Address = () => {
         toast.error("All fields are required!")
         return;
     } else {
-      dispatch(updateUserAddress(country,state,city,address1,address2,addressType));
+      dispatch(updateUserAddress(country,state,city,address1,address2,zipCode,addressType));
     }
+  }
+
+
+  const handleDelete = (item) => {
+      dispatch(deleteUserAddress(item._id));
+      dispatch(loadUser());
   }
 
     return (
@@ -740,22 +789,39 @@ const Address = () => {
                 </div>
             </div>
             <br />
-            <div className='w-full bg-white h-auto md:h-[70px] rounded-[4px] flex flex-col sm:flex-row items-start sm:items-center px-3 shadow justify-between pr-4 md:pr-10 gap-4 py-3 md:py-0'>
+            {
+              Array.isArray(user?.addresses) && user.addresses.map((item, index) => (
+                <div key={index}>
+                     <div className='w-full bg-white h-auto md:h-[70px] rounded-[4px] flex flex-col sm:flex-row items-start sm:items-center px-3 shadow justify-between pr-4 md:pr-10 gap-4 py-3 md:py-0'>
                 <div className="flex items-center gap-2">
-                    <h5 className='font-[600] text-sm md:text-base'>Default Address</h5>
+                    <h5 className='font-[600] text-sm md:text-base'>{item.addressType}</h5>
                 </div>
                 <div className='pl-0 md:pl-8 flex flex-col sm:flex-row items-start sm:items-center gap-2 md:gap-0'>
-                    <h6 className='text-sm md:text-base'> 494 Eden Garden, Joyland, UK </h6>
+                    <h6 className='text-sm md:text-base'> { item.address1 }, { item.address2 } </h6>
                 </div>
                 <div className='pl-0 md:pl-8 flex items-center'>
-                    <h6 className='text-sm md:text-base'> Ph: +923154854986 </h6>
+                    <h6 className='text-sm md:text-base'> { user && user.phoneNumber } </h6>
                 </div>
                 <div>
                     <div className="flex items-center justify-between pl-0 md:pl-8">
-                        <AiOutlineDelete size={20} className='cursor-pointer' />
+                        <AiOutlineDelete size={20} className='cursor-pointer hover:text-red-600' 
+                        onClick={() => handleDelete(item)}
+                        />
                     </div>
                 </div>
             </div>
+                </div>
+              ))
+            }
+
+            {
+              Array.isArray(user?.addresses) && user.addresses.length === 0 && (
+                <h1 className='text-center text-gray-500 pt-20 text-lg'>
+                  No addresses added yet.
+                </h1>
+              )
+            }
+            
         </div>
     )
 }
