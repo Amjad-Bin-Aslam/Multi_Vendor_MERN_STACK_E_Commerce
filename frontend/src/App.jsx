@@ -15,6 +15,8 @@ import {
   ShopCreatePage,
   SellerActivationPage,
   ShopLoginPage,
+  PaymentPage,
+  CheckoutPage
 } from "./Routes/AppRoutes"
 
 import { 
@@ -37,7 +39,6 @@ import ProtectedRoute from './ProtectedRoutes/ProtectedRoute';
 import SellerProtectedRoute from './ProtectedRoutes/SellerProtectedRoute';
 import { getAllProducts } from './redux/actions/product';
 import { getAllEvents } from './redux/actions/event';
-import CheckoutPage from './pages/CheckoutPage';
 
 
 function App() {
@@ -90,6 +91,7 @@ function App() {
         <CheckoutPage />
         </ProtectedRoute>
       } />
+      <Route path='/payment' element = {<PaymentPage />}  />
       <Route path='/profile' element = { 
         <ProtectedRoute isAuthenticated={isAuthenticated} loading={loading} >
           <ProfilePage />

@@ -47,7 +47,54 @@ const getAllCoupons = async (req , res) => {
 
 }
 
+
+
+// delete coupon code
+const deleteCouponCode = async (req, res) => {
+
+    try {
+
+        const couponCodeId = req.params.id
+
+        const couponCode = await couponCodeModel.findByIdAndDelete(couponCodeId)
+        if(!couponCode){
+            return res.json({success: false, message: "Coupon code not found!"})
+        }
+
+        return res.json({
+            success: true,
+            message: "Coupon code deleted successfully!",
+        })
+        
+    } catch (error) {
+        console.log(error)
+        return res.json({ success: false, message: error.message })
+    }
+
+}
+
+
+// get coupon code by value
+const getCouponCodeValue = async (req, res) => {
+
+    try {
+
+        const name = req.params.name
+
+        const couponCode = await couponCodeModel.findOne({name})
+        return res.json({ success: true, couponCode })
+        
+    } catch (error) {
+        console.log(error)
+        return res.json({ success: false, message: error.message })
+    }
+
+}
+
+
 module.exports = {
     createCouponCode,
     getAllCoupons,
+    deleteCouponCode,
+    getCouponCodeValue
 }
