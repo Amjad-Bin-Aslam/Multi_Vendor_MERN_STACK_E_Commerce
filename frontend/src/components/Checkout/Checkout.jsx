@@ -42,7 +42,7 @@ const Checkout = () => {
             cart,
             totalPrice,
             shipping,
-            // discountPrice,
+            discountPrice: discountPercentage || 0,
             shippingAddress,
             user,
         }
